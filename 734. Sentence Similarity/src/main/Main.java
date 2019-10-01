@@ -1,6 +1,7 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -26,23 +27,25 @@ import java.util.Map;
  */
 
 class Solution {
-	public boolean areSentencesSimilar(String[] words1, String[] words2, String[][] pairs) {
+	public boolean areSentencesSimilar(String[] words1, String[] words2, List<List<String>> pairs) {
 		if(words1.length != words2.length)
 			return false;
 		// store mapping of pairs
 		Map<String, HashSet<String>> map = new HashMap<>();
-		for(String []str : pairs) {
-			if(!map.containsKey(str[0]))
-				map.put(str[0], new HashSet<>());
-			map.get(str[0]).add(str[1]);
+		for(List<String> pair : pairs) {
+			if(!map.containsKey(pair.get(0)))
+				map.put(pair.get(0), new HashSet<>());
+			map.get(pair.get(0)).add(pair.get(1));
 			
-			if(!map.containsKey(str[1]))
-				map.put(str[1], new HashSet<>());
-			map.get(str[1]).add(str[0]);
+			if(!map.containsKey(pair.get(1)))
+				map.put(pair.get(1), new HashSet<>());
+			map.get(pair.get(1)).add(pair.get(0));
 		}
 		StringBuilder sb = new StringBuilder();
 		for(int i = 0;i < words1.length;i++) {
-			if((!words1[i].equals(words2[i]) && !map.containsKey(words1[i])) || !map.get(words1[i]).contains(words2[i]))
+			if(words1[i].equals(words2[i]))
+				continue;
+			if(!map.containsKey(words1[i]) || !map.get(words1[i]).contains(words2[i]))
 				return false;
 		}
 		
@@ -53,7 +56,8 @@ class Solution {
 public class Main {
 	public static void main(String[] args) {
 		String []words1 = {"great", "acting", "skills"}, words2 = {"fine", "drama", "talent"};
-		String [][]pairs = {{"great", "fine"}, {"acting","drama"}, {"skills","talent"}};
+		List<List<String>>pairs = Arrays.asList(Arrays.asList("great", "fine"), Arrays.asList("acting","drama"), 
+				Arrays.asList("skills","talent"));
 		System.out.println(new Solution().areSentencesSimilar(words1, words2, pairs));
 				
 	}

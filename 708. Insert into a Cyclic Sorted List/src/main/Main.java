@@ -31,6 +31,7 @@ package main;
  * 4: If node.val == node.next.val, then we still have to judge whether node is the last node of the ring, 
  * and whether node.next is the head of the ring. If so, we can insert x.
  * 
+ * https://leetcode.com/problems/insert-into-a-cyclic-sorted-list/discuss/282340/Simple-Java-0ms-iterative-solution-in-0(n)-that-beats-100-with-explanation
  */
 class Solution {
 	
@@ -47,44 +48,39 @@ class Solution {
 	}
 	
 	public Node insert(Node node, int insertVal) {
+		Node newnode = new Node(insertVal, null);
 		if(node == null) {
-			node = new Node(insertVal, null);
-			node.next = node;
-			return node;
+			newnode.next = newnode;
+			return newnode;
 		}
 		
-		Node head = node;
-		while(node != null && node.next != null) {
-			if(node.val < node.next.val) {
-				if(node.val <= insertVal && insertVal <= node.next.val) {
-					insertutil(node, insertVal);
+		Node prev = node, next = node.next;
+		/* break when
+		 * a) increasing list i.e head to tail and value is between any two nodes
+		 * b) value greater than last node value (greatest) or less than first node value(smallest) i.e 
+		 * should be insert at the last of list or at the beginning of the list
+		 */
+		while(next != node) {
+			if((insertVal < next.val && insertVal >= prev.val) || (prev.val > next.val && (prev.val <= insertVal || insertVal <= next.val))) {
 					break;
-				}
-			} else if(node.val > node.next.val) {
-				if(insertVal > node.val || insertVal < node.next.val) {
-					insertutil(node, insertVal);
-					break;
-				}
-			} else {
-				if(node.next == node) {
-					insertutil(node, insertVal);
-					break;
-				}
 			}
-			node = node.next;
+			prev = next;
+			next = next.next;
 		}
-		return head;
-	}
-	
-	private void insertutil(Node node, int x) {
-		Node newnode = new Node(x, null);
-		newnode.next = node.next;
-		node.next = newnode;
+		prev.next = newnode;
+		newnode.next = next;
+		return node;
 	}
 }
 
 public class Main {
 	public static void main(String[] args) {
-
+		Solution s = new Solution();
+		Solution.Node head = s.new Node(3, null);
+		head.next = s.new Node(4, null);
+		head.next.next = s.new Node(1, null);
+		head.next.next.next = head;
+		Solution.Node temp = s.insert(head, 2);
+		System.out.println(temp.val);
 	}
 }

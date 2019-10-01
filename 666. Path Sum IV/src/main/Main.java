@@ -39,32 +39,38 @@ import java.util.Map;
  */
 
 class Solution {
-    int ans = 0;
+    int sum = 0;
+    Map<Integer, Integer> tree = new HashMap<>();
+    
     public int pathSum(int[] nums) {
-    	if(nums == null || nums.length == 0)
-    		return 0;
-    	if(nums.length == 1)
-    		return nums[0];
-    	Map<Integer, Integer> map = new HashMap<>();
-    	for(int num : nums)
-    		map.put(num/10, num%10);
-    	dfs(nums[0]/10, map, 0);    	
-    	return ans;
+        if (nums == null || nums.length == 0) return 0;
+        
+        for (int num : nums) {
+            int key = num / 10;
+            int value = num % 10;
+            tree.put(key, value);
+        }
+        
+        traverse(nums[0] / 10, 0);
+        
+        return sum;
     }
     
-    void dfs(int node, Map<Integer, Integer> map, int sum) {
-    	if(!map.containsKey(node))
-    		return;
-    	
-    	sum += map.get(node);
-    	int depth = node/10, pos = node%10;
-    	int left = (depth+1)*10 + 2*pos-1, right = left + 1;
-    	if(!map.containsKey(left) && !map.containsKey(right)) {
-    		ans+= sum;
-    	} else {
-    		dfs(left, map, sum);
-    		dfs(right, map, sum);
-    	}
+    private void traverse(int root, int preSum) {
+        int level = root / 10;
+        int pos = root % 10;
+        int left = (level + 1) * 10 + pos * 2 - 1;
+        int right = (level + 1) * 10 + pos * 2;
+        
+        int curSum = preSum + tree.get(root);
+        
+        if (!tree.containsKey(left) && !tree.containsKey(right)) {
+            sum += curSum;
+            return;
+        }
+        
+        if (tree.containsKey(left)) traverse(left, curSum);
+        if (tree.containsKey(right)) traverse(right, curSum);
     }
 }
 

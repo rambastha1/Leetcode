@@ -1,7 +1,9 @@
 package main;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 /* Given two sentences words1, words2 (each represented as an array of strings), 
@@ -22,50 +24,46 @@ import java.util.Map;
  * The length of pairs will not exceed 2000.
  * The length of each pairs[i] will be 2.
  * The length of each words[i] and pairs[i][j] will be in the range [1, 20].
+ * 
+ * https://leetcode.com/problems/sentence-similarity-ii/discuss/109752/JavaC%2B%2B-Clean-Code-with-Explanation
+ * 
+ * can be done using dfs as well just more complexity
  */
 
 class Solution {
-	public boolean areSentencesSimilarTwo(String[] words1, String[] words2, String[][] pairs) {
+	public boolean areSentencesSimilarTwo(String[] words1, String[] words2, List<List<String>> pairs) {
 		if(words1.length != words2.length) return false;
-		
-		Map<String, HashSet<String>> map = new HashMap<>();
-		for(String []pair : pairs) {
-			if(!map.containsKey(pair[0]))
-				map.put(pair[0], new HashSet<>());
-			if(!map.containsKey(pair[1]))
-				map.put(pair[1], new HashSet<>());
-			map.get(pair[0]).add(pair[1]);
-			map.get(pair[1]).add(pair[0]);
+		Map<String, String> map = new HashMap<>();
+		for(List<String> pair : pairs) {
+			String str1 = find(map, pair.get(0));
+			String str2 = find(map, find(map, pair.get(1)));
+			if(!str1.equals(str2))
+				map.put(str1, str2);
 		}
-		// for each word dfs to find target if not false
+		
 		for(int i = 0;i < words1.length;i++) {
-			if(words1[i].equals(words2[i])) continue;
-			else {
-				if(!dfs(words1[i], words2[i], map, new HashSet<>()))
-					return false; 
-			}
+			if(!words1[i].equals(words2[i]) && !find(map, words1[i]).equals(find(map, words2[i])))
+				return false;
 		}
 		return true;
 	}
 	
-	boolean dfs(String word1, String word2, Map<String, HashSet<String>> map, HashSet<String> visited) {
-		if(map.get(word1).contains(word2))
-			return true;
-		visited.add(word1);
-		for(String dest : map.get(word1)) {
-			if(!visited.contains(dest)) {
-				if(dfs(dest, word2, map, visited))
-					return true;
-			}
+	private String find(Map<String, String> map, String str) {
+		// this is same as parent array where initially parent[i] = i
+		if(!map.containsKey(str)) {
+			map.put(str, str);
 		}
-		return false;
+		if(map.get(str).compareTo(str) != 0)
+			map.put(str, find(map, map.get(str)));
+		return map.get(str);
 	}
 }
 
 public class Main {
 	public static void main(String[] args) {
 		String []words1 = {"great", "acting", "skills"}, words2 = {"fine", "drama", "talent"};
-		String [][]pairs = {{"great", "good"}, {"fine", "good"}, {"acting","drama"}, {"skills","talent"}};
+		List<List<String>>pairs = Arrays.asList(Arrays.asList("great", "good"), Arrays.asList("fine", "good"), 
+				Arrays.asList("acting","drama"), Arrays.asList("skills","talent"));
 		System.out.println(new Solution().areSentencesSimilarTwo(words1, words2, pairs));
 	}
 }

@@ -21,17 +21,17 @@ class Solution {
     	if(root == null || root.left == null && root.right == null)
     		return false;
     	Set<Integer> set = new HashSet<>();
-    	int sum = dfs(root, set);
-    	sum /= 2;
-    	return set.contains(sum);
+    	int sum = root.val + dfs(root.left, set) + dfs(root.right, set);
+    	return sum%2 == 0 && set.contains(sum/2);
     }
     
     int dfs(TreeNode root, Set<Integer> set) {
     	if(root == null)
     		return 0;
-    	root.val += dfs(root.left, set) + dfs(root.right, set);
-    	set.add(root.val);
-    	return root.val;
+    	int sum = 0;
+    	sum += root.val + dfs(root.left, set) + dfs(root.right, set);
+    	set.add(sum);
+    	return sum;
     }
     
     public TreeNode root;
