@@ -1,7 +1,7 @@
 package main;
 // https://leetcode.com/problems/last-substring-in-lexicographical-order/discuss/362387/JavaPython-3-Two-short-O(n)-codes-language%3A-2-pointers-and-encoding.
 class Solution {
-	/* i and j pointes to maximum char
+	/* i and j points to maximum char
 	 * minimum index means larger char
 	 */
 	public String lastSubstring(String s) {
