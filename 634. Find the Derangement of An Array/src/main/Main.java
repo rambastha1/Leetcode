@@ -22,23 +22,31 @@ package main;
  * https://www.youtube.com/watch?v=qYAWjIVY7Zw&feature=youtu.be
  */
 
+/* https://leetcode.com/problems/find-the-derangement-of-an-array/discuss/104981/If-you-don't-understand
+ * let's consider what D(n) means, it means the number of derangement for an array with index from 1 to n, and value from 1 to n.
+Then let's think about value n, we know it can not be put on index n, instead, it can be put on index 1 to n-1, 
+so there are n-1 possibilities.
+For each of the situation above, let's say value n is put on index i, then we need to discuss about where we put value i:
+1.if value i is put on index n (looks like value i and value n swapped their positions), then we can just ignore value i, 
+value n, index i, index n, what's left are n-2 different values and n-2 different indexes, the problem becomes D(n-2).
+2.if value i is not put on index n, then we can only ignore value n and index i, what's left are n-1 different values and n-1 
+different indexes, each value has an index that it can not be put on. (value i can not be put on index n here) 
+So the problem becomes D(n-1).
+
+Therefore, D(n) = (n-1) [D(n-2) + D(n-1)].
+ * 
+ */
 class Solution {
 	public int findDerangement(int n) {
-		if(n == 1) return 0;
-		if(n == 2) return 1;
-		if(n == 3) return 2;
-		int []dp = new int[n+1];
-		dp[0] = 1;
-		dp[1] = 0;
-		dp[2] = 1;
-		dp[3] = 2;
-		int mod = (int)Math.pow(10, 9)+7;
-		for(int i = 4;i <= n;i++) {
-			long val  = (i-1)*(dp[i-1] + dp[i-2]);
-			dp[i] = (int)val%mod;
-		}
-		return dp[n];
-	}
+        if (n <= 1) return 0;
+        long dp[] = new long[n + 1];
+        long mod = 1000000007;
+        dp[2] = 1;
+        for (int i = 3; i <= n; i++) {
+            dp[i] = (i - 1) * (dp[i - 1] + dp[i - 2]) % mod;
+        }
+        return (int)dp[n];        
+    }
 }
 
 public class Main {

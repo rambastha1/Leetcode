@@ -12,31 +12,38 @@ package main;
  * 
  */
 
-/*
- * we'll achieve the maximum profit by picking up a nut which is farther from the tree 
- * but closer to the squirrel, as the first nut. This is because, the only travel distance 
- * which we can save is from the tree to the nut, but to achieve this saving, 
- * we need to go from the squirrel's start position to the nut's position.
+/* https://leetcode.com/articles/squirrel-simulation/
+ * We know, the distance between any two points(tree, squirrel, nut) is given by the absolute difference between the 
+ * corresponding x-coordinates and the corresponding y-coordinates.
+Now, in order to determine the required minimum distance, we need to observe a few points. 
+Firstly, the order in which the nuts are picked doesn't affect the final result, 
+except one of the nuts which needs to be visited first from the squirrel's starting position. 
+For the rest of the nuts, it is mandatory to go from the tree to the nut and then come back as well.
+For the first visited nut, the saving obtained, given by dd, 
+is the difference between the distance between the tree and the current nut & 
+the distance between the current nut and the squirrel. This is because for this nut, 
+we need not travel from the tree to the nut, but need to travel an additional distance from the squirrel's original position to the nut.
+While traversing over the nutsnuts array and adding the to-and-fro distance, we find out the saving, dd, 
+which can be obtained if the squirrel goes to the current nut first. Out of all the nuts, 
+we find out the nut which maximizes the saving and then deduct this maximum saving from the 
+sum total of the to-and-fro distance of all the nuts.
+
+Note that the first nut to be picked needs not necessarily be the nut closest to the squirrel's start point, 
+but it's the one which maximizes the savings.
  */
 
 class Solution {
     public int minDistance(int height, int width, int[] tree, int[] squirrel, int[][] nuts) {
-    	int index = 0, min = Integer.MAX_VALUE;
-    	for(int i = 0;i < nuts.length;i++) {
-    		int dist = Math.abs(nuts[i][0] - squirrel[0]) + Math.abs(nuts[i][1] - squirrel[1]);
-    		if(dist < min) {
-    			min = dist;
-    			index = i;
-    		}
+    	int total_dist = 0, d = Integer.MIN_VALUE;
+    	for(int []nut : nuts) {
+    		total_dist += distance(nut, tree)*2;
+    		d = Math.max(d, distance(nut, tree) - distance(nut, squirrel));
     	}
-    	
-    	int dist = min + Math.abs(tree[0] - nuts[index][0]) + Math.abs(tree[1] - nuts[index][1]);
-    	for(int i = 0;i < nuts.length;i++) {
-    		if(i != index) {
-    			dist += (Math.abs(tree[0] - nuts[i][0]) + Math.abs(tree[1] - nuts[i][1])) * 2;
-    		}
-    	}    	
-    	return dist;
+    	return total_dist-d;
+    }
+    
+    private int distance(int []a, int []b) {
+    	return Math.abs(a[0]-b[0]) + Math.abs(a[1]-b[1]);
     }
 }
 

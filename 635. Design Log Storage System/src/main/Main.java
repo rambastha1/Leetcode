@@ -5,8 +5,11 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.NavigableMap;
+import java.util.TreeMap;
 
-/*
+/* https://leetcode.com/problems/design-log-storage-system/discuss/105006/Java-range-query-using-TreeMap.subMap()
+ * 
  * You are given several logs that each log contains a unique id and timestamp. 
  * Timestamp is a string that has the following format: Year:Month:Day:Hour:Minute:Second, 
  * for example, 2017:01:01:23:59:59. All domains are zero-padded decimal numbers.
@@ -40,43 +43,48 @@ import java.util.Map;
  */
 
 class LogSystem {
-	
-	//Even store log as this
-	/*class Log {
-		int year, month, day, hour, min, sec;
-		public Log(int year, int month, int day, int hour, int min, int sec) {
-			this.year = year;
-			this.month = month;
-			this.day =day;
-			this.hour = hour;
-			this.min = min;
-			this.sec =sec;
-		}
-	}*/
+	private String min, max;
+	// granularity -> index of :
+	private Map<String, Integer> indexmap;
+	// timestamp -> keys
+	private TreeMap<String, List<Integer>> keymap; 
 	
 	public LogSystem() {
-        
+		// given in question
+		this.min = "2000:01:01:00:00:00";
+        this.max = "2017:12:31:23:59:59";
+        indexmap = new HashMap<>();
+        /* indices of the ':' after each time granularity (Year, or Month or Day), 
+         * so that we could use this index to cut off part of the timestamp to make up the real start and ending boundary.
+         * year is four digit 0-3, month 2 digit 1-12 etc
+         */
+        indexmap.put("Year", 4);
+        indexmap.put("Month", 7);
+        indexmap.put("Day", 10);
+        indexmap.put("Hour", 13);
+        indexmap.put("Minute", 16);
+        indexmap.put("Second", 19);
+        keymap = new TreeMap<>();
     }
 	
-	Map<String, Integer> map = new HashMap<>();
-	List<String> granularity_list = Arrays.asList("Year", "Month", "Day", "Hour", "Minute", "Second");
-	
 	void put(int id, String timestamp) {
-		String []str = timestamp.split(":");
-		map.put(timestamp, id);
+		if(!this.keymap.containsKey(timestamp))
+			this.keymap.put(timestamp, new ArrayList<>());
+		this.keymap.get(timestamp).add(id);
 	}
 	
 	public List<Integer> retrieve(String s, String e, String gra) {
-		String []s1 = s.split(":"), s2 = e.split(":");
-		int index = granularity_list.indexOf(gra);
+		int index = indexmap.get(gra);
 		
-		List<Integer> ans = new ArrayList<>();
-		for(String str : map.keySet()) {
-			String []node = str.split(":");
-			if((node[index].compareTo(s1[index]) >= 0) && (node[index].compareTo(s2[index]) <= 0))
-				ans.add(map.get(str));
+		String start = s.substring(0, index) + min.substring(index);
+		String end = e.substring(0, index) + max.substring(index);
+		// returns a submap from key start to end both inclusive
+		NavigableMap<String, List<Integer>> map = keymap.subMap(start, true, end, true);
+		List<Integer> res = new ArrayList<>();
+		for(Map.Entry<String, List<Integer>> entry : map.entrySet()) {
+			res.addAll(entry.getValue());
 		}
-		return ans;
+		return res;
 	}
 }
 

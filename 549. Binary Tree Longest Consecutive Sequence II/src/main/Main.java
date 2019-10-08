@@ -36,14 +36,13 @@ class Solution {
 	
 	int maxlen = 0;
 	public int longestConsecutive(TreeNode root) {
-		if(root == null)
-			return 0;
 		dfs(root);
 		return maxlen;
 	}
 	
 	public int[] dfs(TreeNode root) {
-		if(root == null) return new int[] {0,0};
+		if(root == null) 
+			return new int[] {0,0};
 		int inc = 1, dec = 1;
 		if(root.left != null) {
 			int []left = dfs(root.left);
@@ -56,9 +55,9 @@ class Solution {
 		if(root.right != null) {
 			int []right = dfs(root.right);
 			if(root.val == root.right.val + 1)
-				dec = right[1] + 1;
+				dec = Math.max(dec, right[1] + 1);
 			else if(root.val == root.right.val - 1)
-				inc = right[0] + 1;
+				inc = Math.max(inc, right[0]+1);
 		}
 		// root is included in both thus -1
 		maxlen = Math.max(maxlen, inc+dec-1);

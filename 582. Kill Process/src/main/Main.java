@@ -60,7 +60,7 @@ class Solution {
 		while(!q.isEmpty()) {
 			int parent = q.poll();
 			res.add(parent);
-			if(!ppid.contains(parent))
+			if(!map.containsKey(parent))
 				continue;
 			List<Integer> child = map.get(parent);
 			for(int i = 0;i < child.size();i++)

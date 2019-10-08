@@ -31,8 +31,9 @@ class Solution {
 		int []col = new int[n];
 		int []diag = new int[m+n], anti = new int[m+n];
 		
-		int max = Integer.MIN_VALUE;
+		int max = 0;
 		for(int i = 0;i < M.length;i++) {
+			row = 0;
     		for(int j = 0;j < M[0].length;j++) {
     			if(M[i][j] == 1) {
     				row++;

@@ -20,25 +20,27 @@ package main;
 
 class Solution {
     public int smallestFactorization(int a) {
-    	if(a == 1)
+    	if(a < 10)
     		return a;
-    	long res = 0;
-    	int mul = 1;
+    	long res = 0, mul = 1;
     	for(int i = 9;i >= 2;i--) {
     		// a will never be 0, it will become 1 but loop ends at 2
     		while(a%i == 0) {
     			a /= i;
     			res = i * mul + res;
+    			if(res  > Integer.MAX_VALUE)
+    				return 0;
     			mul *= 10;
     		}
     	}
-    	return (a < 2 && res<= Integer.MAX_VALUE)?(int)res:0;
+    	return a==1?(int)res:0;
     }
 }
 
 public class Main {
 	public static void main(String[] args) {
-		int a = 100;
+		//int a = 100;
+		int a = 2700000;
 		System.out.println(new Solution().smallestFactorization(a));
 	}
 }
