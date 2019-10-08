@@ -25,28 +25,36 @@ import java.util.List;
  * For each set of three adjacent points A, B, C, find the cross product AB · BC. If the sign of
  * all the cross products is the same, the angles are all positive or negative (depending on the
  * order in which we visit them) so the polygon is convex.
+ * https://leetcode.com/problems/convex-polygon/discuss/95570/Beyond-my-knowledge...-Java-solution-with-in-line-explanation
  */
 
 class Solution {
-	public boolean isConvex(List<List<Integer>> points) {  
-        long prev = 0;  
-        int n = points.size();  
-        for(int i = 0; i < n; i++) { 
-        	// create 2X2 matrix to get determinant
-            int[][] m = new int[2][2];  
-            for(int j = 0; j < 2; j++) {  
-                m[j] = new int[] {points.get((i+j+1)%n).get(0) - points.get(i).get(0),  
-                        points.get((i+j+1)%n).get(1) - points.get(i).get(1)};  
-            }  
-            long cur = det(m);  
-            if (cur * prev < 0) return false;  
-            prev = cur;  
-        }  
-        return true;  
-    }  
-    private long det(int[][] m) {  
-        return m[0][0] * m[1][1] - m[0][1] * m[1][0];  
-    } 
+	public boolean isConvex(List<List<Integer>> points) {
+	    List<Integer> back1 = points.get(points.size() - 1);
+	    List<Integer> back2 = points.get(points.size() - 2);
+	    boolean seenPositive = false, seenNegative = false;
+	    
+	    for (List<Integer> curr : points) {
+	        int orientation = orientation(back2, back1, curr);
+	        
+	        if (orientation < 0)
+	            seenNegative = true;
+	        else if (orientation > 0)
+	            seenPositive = true;
+	            
+	        if (seenPositive && seenNegative) return false;
+	        
+	        back2 = back1; back1 = curr;
+	    }
+	    
+	    return true;
+	}
+
+	private int orientation(List<Integer> point1, List<Integer> point2, List<Integer> point3) {
+	    int orientation = (point2.get(1) - point1.get(1)) * (point3.get(0) - point2.get(0)) -
+	                      (point2.get(0) - point1.get(0)) * (point3.get(1) - point2.get(1));
+	    return orientation == 0 ? 0 : orientation / Math.abs(orientation); // 0, 1 or -1
+	} 
 }
 
 public class Main {

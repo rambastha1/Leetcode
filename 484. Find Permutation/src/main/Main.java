@@ -46,6 +46,7 @@ class Solution {
 				while(j < s.length() && s.charAt(j) == 'D')
 					j++;
 				reverse(res, i, j);
+				i = j;
 			}
 		}
 		return res;

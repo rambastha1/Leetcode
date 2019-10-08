@@ -64,45 +64,15 @@ class Solution {
     	}
     	int ans = 0;
     	for(String row : map.keySet()) {
-    		for(int i = 0;i < n;i++) {
-    			if(map.get(row) == N && col[i] == N)
-    				ans += N;
+    		if(map.get(row) == N) {
+    			for(int i = 0;i < n;i++) {
+    				if(row.charAt(i) == 'B' && col[i] == N)
+    					ans += N;
+    			}
     		}
     	}
     	return ans;
 	}
-	
-	// My working solution
-    /*public int findBlackPixel(char[][] picture, int N) {
-    	if(picture == null || picture.length == 0 || N == 0)
-    		return 0;
-    	int m = picture.length, n = picture[0].length;
-    	int []row = new int[m], col = new int[n];
-    	for(int i = 0;i < m;i++) {
-    		for(int j = 0;j < n;j++) {
-    			if(picture[i][j] == 'B') {
-    				row[i]++;col[j]++;
-    			}
-    		}
-    	}
-    	
-    	String str = "";
-    	int count = 0;
-    	for(int j = 0;j < n;j++) {
-    		if(col[j] != N)
-				continue;
-    		String temp = "";
-    		for(int i = 0;i < m;i++) {
-        		if(row[i] != N)
-        			continue;
-        		temp = String.valueOf(picture[i]);
-    		}
-    		if((str == "" && temp != "") || str != "" && str.compareTo(temp) == 0)
-    			count++;
-    		str = (str.compareTo("") == 0)?temp:str;
-    	}
-    	return count*N;
-    }*/
 }
 
 public class Main {

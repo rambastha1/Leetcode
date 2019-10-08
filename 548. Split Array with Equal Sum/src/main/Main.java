@@ -40,19 +40,18 @@ class Solution {
 			prefix[i] = prefix[i-1] + nums[i];
 		}
 		
-		// 0 ~ i-1  |  i+1 ~ mid-1  |  mid+1 ~ k-1  |  k+1 ~ len-1
-		for(int mid = 3;mid < n-3;mid++) {
-			Set<Integer> set = new HashSet<>();
-			for(int i = 1;i <= mid-2;i++) {
-				if(prefix[i-1] == prefix[mid-1] - prefix[i])
-					set.add(prefix[i-1]);
-			}
-			
-			for(int k = mid+2;k <= n-2;k++) {
-				if(prefix[n-1] - prefix[k] == prefix[k-1] - prefix[mid]) {
-					int sum = prefix[n-1] - prefix[k];
-					if(set.contains(sum))
-						return true;
+		// 0 ~ i-1  |  i+1 ~ j-1  |  j+1 ~ k-1  |  k+1 ~ n-1
+		for(int i = 1;i <= n-6;i++) {
+			if(i != 1 && nums[i] == 0 && nums[i-1] == 0)
+				continue;
+			for(int j = i+2;j <= n-4;j++) {
+				if(prefix[i-1] != prefix[j-1] - prefix[i])
+					continue;
+				for(int k = j+2;k <= n-2;k++) {
+					int sum3 = prefix[k-1] - prefix[j];
+					int sum4 = prefix[n-1] - prefix[k];
+					if(sum3 == sum4 && sum3 == prefix[i-1])
+						return true; 
 				}
 			}
 		}

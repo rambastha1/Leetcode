@@ -71,7 +71,7 @@ class Solution {
     
     int getVal(String s ) {
     	StringBuilder sb = new StringBuilder();
-    	while(s.charAt(index) != '(' && s.charAt(index) != ')')
+    	while(index < s.length() && s.charAt(index) != '(' && s.charAt(index) != ')')
     		sb.append(s.charAt(index++));
     	return Integer.valueOf(sb.toString());
     }
@@ -94,7 +94,8 @@ class Solution {
 
 public class Main {
 	public static void main(String[] args) {
-		String s = "4(2(3)(1))(6(5))";
+		//String s = "4(2(3)(1))(6(5))";
+		String s = "4";
 		TreeNode node = new Solution().str2tree(s);
 		new Solution().levelorder(node);
 	}

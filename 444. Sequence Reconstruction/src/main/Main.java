@@ -53,21 +53,23 @@ class Solution {
 		int n = org.length;
 		int []indegree = new int[n+1];
 		int count = 0;
+		
 		for(List<Integer> seq : seqs) {
-			count += seq.size();
-			if(seq.size() >= 1 && seq.get(0) > n && seq.get(0) < 0)
-				return false;
-			for(int i = 1;i < seq.size();i++) {
-				if(seq.get(i) < 0 || seq.get(i) > n)
-					return false;
-				indegree[seq.get(i)]++;
-				if(!graph.containsKey(seq.get(i-1)))
-					graph.put(seq.get(i-1), new HashSet<>());
+			if(seq.size() == 1) {
+				if(!graph.containsKey(seq.get(0)))
+					graph.put(seq.get(0), new HashSet<>());
+				continue;
+			}
+			for(int i = 0;i < seq.size()-1;i++) {
+				if(!graph.containsKey(seq.get(i)))
+					graph.put(seq.get(i), new HashSet<>());
+				if(!graph.containsKey(seq.get(i+1)))
+					graph.put(seq.get(i+1), new HashSet<>());
+				
+				indegree[seq.get(i+1)]++;
+				graph.get(seq.get(i)).add(seq.get(i+1));
 			}
 		}
-		// case [1], []
-		if(count < n)
-			return false;
 		
 		Queue<Integer> q = new LinkedList<>();
 		// node from 1 to n
@@ -78,7 +80,13 @@ class Solution {
 		
 		count = 0;
 		while(!q.isEmpty()) {
+			if(q.size() > 1)
+				return false;
 			int node = q.poll();
+			if(org[count] != node)
+				return false;
+			if(!graph.containsKey(node))
+				continue;
 			for(int next : graph.get(node)) {
 				indegree[next]--;
 				if(indegree[next] == 0)
@@ -86,7 +94,7 @@ class Solution {
 			}
 			count++;
 		}
-		return count == n;
+		return count == n && count == graph.size();
 	}
 }
 
@@ -96,7 +104,7 @@ public class Main {
 		int [][]seqs = {{1,2}, {1,3}};*/
 		
 		int []org = {1,2,3};
-		List<List<Integer>>seqs = Arrays.asList(Arrays.asList(1,2), Arrays.asList(1,3), Arrays.asList(2,3));
+		List<List<Integer>>seqs = Arrays.asList(Arrays.asList(1,2), Arrays.asList(1,2));
 		System.out.println(new Solution().sequenceReconstruction(org, seqs));
 	}
 }

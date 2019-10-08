@@ -55,7 +55,7 @@ class Solution {
 						getvalue(nums[l++], a, b, c):getvalue(nums[r--], a, b, c);
 			} else {
 				res[index++] = (getvalue(nums[l], a, b, c) >= getvalue(nums[r], a, b, c))?
-						getvalue(nums[l++], a, b, c):getvalue(nums[r--], a, b, c);
+						getvalue(nums[r--], a, b, c):getvalue(nums[l++], a, b, c);
 			}
 		}	
 		print(res);

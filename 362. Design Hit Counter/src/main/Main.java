@@ -57,7 +57,7 @@ class HitCounter {
 		int count = 0;
 		for(int i = 0;i < 300;i++) {
 			if(timestamp - this.timestamp[i] < 300)
-				count++;
+				count += hit[i];
 		} 
 		return count;
 	}

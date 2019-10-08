@@ -21,9 +21,11 @@ class Solution {
 	}
 	
 	public Node root, head = new Node(0);
-	Node prev = new Node(0);
+	Node prev = new Node(Integer.MIN_VALUE);
 	
 	public Node treeToDoublyList(Node root) {
+		if(root == null)
+            return root;
 		util(root);
 		this.head.left = prev;
 		this.prev.right = head;
@@ -35,7 +37,7 @@ class Solution {
 		if(root == null) 
 			return;
 		treeToDoublyList(root.left);
-		if(prev.val == 0) {
+		if(prev.val == Integer.MIN_VALUE) {
 			head = root;
 		} else {
 			prev.right = root;

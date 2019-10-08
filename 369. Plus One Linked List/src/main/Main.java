@@ -22,34 +22,34 @@ class Solution {
 	}
 	
 	public ListNode head;
-	
+	/* j will stop at last node
+	 * i will stop at node before last 9
+	 * increment i.val and set value from next nodes to end to 0
+	 */
 	public ListNode plusOne(ListNode head) {
 		ListNode res = new ListNode(0);
 		res.next = head;
-		
-		ListNode curr = head, lastdigitnot9 = null;
-		while(curr != null) {
-			if(curr.val != 9)
-				lastdigitnot9 = curr;
-			curr = curr.next;
+		ListNode i = res, j = res;
+		while(j.next != null) {
+			j = j.next;
+			if(j.val != 9)
+				i = j;
 		}
 		
-		//If digit is 9
-		if(lastdigitnot9 == null) {
-			res.next = new ListNode(0);
-			res.val = 0;
-			return res;
-		}
-		curr = lastdigitnot9.next;
-		lastdigitnot9.val++;
-		while(curr != null) {
-			curr.val = 0;
-			curr = curr.next;
+		if(j.val != 9) {
+			j.val++;
+		} else {
+			i.val++;
+			i = i.next;
+			while(i != null) {
+				i.val = 0;
+				i = i.next;
+			}
 		}
 		
-		if(res.val == 1)
-			return res;
-		return res.next;
+		if(res.val == 0)
+			return res.next;
+		return res;
 	}
 	
 	void print(ListNode head) {

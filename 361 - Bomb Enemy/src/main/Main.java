@@ -21,11 +21,11 @@ class Solution {
 	public int maxKilledEnemies(char[][] grid) {
 		if(grid.length == 0 || grid[0].length == 0)
 			return 0;
-		int m = grid.length, n = grid[0].length;
+		int m = grid.length, n = m!=0?grid[0].length:0;
 		int row = 0;
 		int []col = new int[n];
 		
-		int ans = Integer.MIN_VALUE;
+		int ans = 0;
 		/*
 		 * Traverse matrix storing number of E in row and col[j]
 		 * when a wall is encountered 
@@ -43,7 +43,7 @@ class Solution {
 						row += grid[i][k] =='E'?1:0;
 				}
 				
-				if(i == 0 || grid[i-1][j] == 0) {
+				if(i == 0 || grid[i-1][j] == 'W') {
 					col[j] = 0;
 					for(int k = i;k < m && grid[k][j] != 'W';k++)
 						col[j] += grid[k][j] == 'E'?1:0;

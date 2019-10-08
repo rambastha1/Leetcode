@@ -49,12 +49,11 @@ class PhoneDirectory {
 		q = new LinkedList<>();
 		for(int i = 0;i < maxNumbers;i++)
 			q.offer(i);
-		max--;
 	}
 	
 	//0(1)
 	public int get() {
-		if(!q.isEmpty())
+		if(q.isEmpty())
 			return -1;
 		int ans = q.poll();
 		set.add(ans);
