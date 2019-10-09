@@ -18,6 +18,7 @@ class Solution {
         int r = m;
         while (l <= r) {
             int partitionX = (l + r)/2;
+            // px + py should be equal to mid of m+n i.e (m+n+1)/2 
             int partitionY = (m + n + 1)/2 - partitionX;
 
             //if partitionX is 0 it means nothing is there on left side. Use -INF for maxLeftX

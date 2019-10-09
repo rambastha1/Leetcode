@@ -1,85 +1,72 @@
 package main;
 
+import java.util.LinkedList;
+import java.util.TreeMap;
+
 /* https://leetcode.com/articles/max-stack/
  * 
  */
 
 class MaxStack {
-	
 	class Node {
 		int val, max;
 		Node prev, next;
-		public Node(int val, int max) {
-			this.max = max;
+		public Node(int val) {
 			this.val = val;
 		}
 	}
 	
+	TreeMap<Integer, LinkedList<Node>> map;
+	
 	public Node head, tail;
 	
 	public MaxStack() {
-		head = null;
-		tail = null;
+		head = new Node(0);
+		tail = new Node(0);
+		head.next = tail;
+		tail.prev = head;
+		map = new TreeMap<>();
 	}
 
 	public void push(int x) {
-		if(head == null && tail == null) {
-			Node newnode = new Node(x, x);
-			head = tail = newnode;
-		} else {
-			int max = Math.max(tail.max, x);
-			Node newnode = new Node(x, max);
-			newnode.prev = tail;
-			tail.next = newnode;
-			tail = tail.next;
-		}
+		Node newnode = new Node(x);
+		newnode.next = tail;
+		newnode.prev = tail.prev;
+		tail.prev.next = newnode;
+		tail.prev = newnode;
+		if(!map.containsKey(x))
+			map.put(x, new LinkedList<>());
+		map.get(x).add(newnode);
 	}
 
 	public int pop() {
-		int res = 0;
-		if(tail == null)
-			return -1;
-		else {
-			res = tail.val;
-			if(head == tail) {
-				head = tail = null;
-			} else {
-				Node temp = tail.prev;
-				temp.next = null;
-				tail.prev = null;
-				tail = temp;
-			}
-		}
-		return res;
+		Node node = tail.prev;
+		if(node == head)
+			return 0;
+		node.prev.next = node.next;
+		node.next.prev = node.prev;
+		map.get(node.val).removeLast();
+		if(map.get(node.val).size() == 0)
+			map.remove(node.val);
+		return node.val;
 	}
 
 	public int top() {
-		if(tail == null)
-			return -1;
-		return tail.val;
+		return tail.prev.val;
 	}
 
 	public int peekMax() {
-		if(tail == null)
-			return -1;
-		return tail.max;
+		return map.lastKey();
 	}
 
 	public int popMax() {
-		if(tail == null)
-			return -1;
-		Node prev = null, curr = tail;
-		while(curr != null && curr.val != curr.max) {
-			prev = curr.prev;
-			curr = prev;
-		}
-		if(prev == null)
-			return -1;
-		Node next = curr.next;
-		prev.next = next;
-		if(next!= null)
-			next.prev = prev;
-		return curr.max;
+		int max = peekMax();
+		Node node = map.get(max).removeLast();
+		node.prev.next = node.next;
+		node.next.prev = node.prev;
+		if(map.get(max).size() == 0)
+			map.remove(max);
+		return max;
 	}
 }
 

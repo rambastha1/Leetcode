@@ -19,21 +19,24 @@ class Solution {
 	 * removes 'c', adds "def", and concatenate with 'c' -> cd, ce, cf
 	 * final ans contains  [ad, ae, af, bd, be, bf, cd, ce, cf]
 	 */
+	String[] map = {"", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+    List<String> res = new ArrayList<>();
+    
     public List<String> letterCombinations(String digits) {
-    	LinkedList<String> ans = new LinkedList<String>();
-		if(digits.isEmpty()) return ans;
-		String[] mapping = new String[] {"0", "1", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-		ans.add("");
-		while(ans.peek().length()!=digits.length()){
-			String remove = ans.remove();
-			String map = mapping[digits.charAt(remove.length())-'0'];
-			System.out.println("remove:" + remove + "\tmap:" + map);
-			for(char c: map.toCharArray()){
-				ans.addLast(remove+c);
-			}
-			//System.out.println(ans);
-		}
-		return ans;
+        if (digits == null || digits.length() == 0) return res;
+        dfs(digits, "", 0);
+        return res;
+    }
+    
+    private void dfs(String d, String prefix, int index) {
+        if (index == d.length()) {
+            res.add(prefix);
+            return;
+        }
+        String curr = map[d.charAt(index) - '0'];
+        for (int i = 0; i < curr.length(); i++) {
+            dfs(d, prefix + curr.charAt(i), index + 1);
+        }
     }
 }
 
