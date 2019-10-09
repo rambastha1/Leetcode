@@ -3,7 +3,7 @@ package main;
 class Solution {
 	/* same logic as slow and fast pointer of linked list. 
 	 * multiplication is used for same direction as multiplication of positive*positive and -ve*-ve > 0
-	 * if loop is not found element is set to 0 therby marking that no loop can be found once we reach this element (kinda dp)
+	 * if loop is not found element is set to 0 thereby marking that no loop can be found once we reach this element (kinda dp)
 	 * 
 	 * To those wondering why this is linear O(n) time complexity and not O(n^2): 
 	 * A nested loop structure does not necessarily imply O(n^2) time complexity. We can apply amortized analysis: 
