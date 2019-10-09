@@ -27,7 +27,9 @@ import java.util.Queue;
  */
 
 class Solution {
-	
+	/*
+	 * only increasing child value need to be checked
+	 */
 	public class TreeNode {
 		 int val;
 		 TreeNode left;
@@ -35,28 +37,21 @@ class Solution {
 		 TreeNode(int x) { val = x; }
 	}
 	
-	public int longestConsecutive(TreeNode root) {
-		if(root == null)
-			return 0;
-		return dfs(root);
-	}
-	
-	int dfs(TreeNode root) {
-		if(root == null)
-			return 0;
-		
-		if(root.left == null && root.right == null)
-			return 1;
-		
-		int l = dfs(root.left);
-		int r = dfs(root.right);
-		
-		if(root.left != null && root.val == root.left.val-1)
-			l++;
-		if(root.right != null && root.val == root.right.val-1)
-			r++;
-		return Math.max(l, r);
-	}
+	private int max = 0;
+    public int longestConsecutive(TreeNode root) {
+        if(root == null) return 0;
+        helper(root, 0, root.val);
+        return max;
+    }
+    
+    public void helper(TreeNode root, int cur, int target){
+        if(root == null) return;
+        if(root.val == target) cur++;
+        else cur = 1;
+        max = Math.max(cur, max);
+        helper(root.left, cur, root.val + 1);
+        helper(root.right, cur, root.val + 1);
+    }
 	
 	public TreeNode root;
 	

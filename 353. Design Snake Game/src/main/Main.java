@@ -1,8 +1,7 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedList;
 import java.util.Map;
 
 /* Design a Snake game that is played on a device with screen size = width x height. 
@@ -52,40 +51,75 @@ import java.util.Map;
  */
 
 class SnakeGame {
-	
-	int width, height, index;
-	int [][]food;
-	List<int []>snake;
-	Map<String, int []> map;
-	
+	Map<String, int[]> dir;
+
+	private final int width;
+	private final int height;
+	private final int[][] food;
+
+	private LinkedList<int[]> snake;
+	private int score;
+	// food index
+	private int index;
+
+	/**
+	 * Initialize your data structure here.
+	 * 
+	 * @param width - screen width
+	 * @param height - screen height
+	 * @param food - A list of food positions E.g food = [[1,1], [1,0]] means the first food is
+	 *        positioned at [1,1], the second is at [1,0].
+	 */
 	public SnakeGame(int width, int height, int[][] food) {
 		this.width = width;
 		this.height = height;
 		this.food = food;
-		this.index = 0;
-		snake = new ArrayList<>();
-		snake.add(new int[] {0,0});
-		map = new HashMap<>();
-		map.put("R", new int[] {0,1});
-		map.put("D", new int[] {1,0});
-		map.put("L", new int[] {0,-1});
-		map.put("U", new int[] {-1,0});
+		snake = new LinkedList<>();
+		snake.add(new int[] {0, 0});
+		score = 0;
+		index = 0;
+		dir = new HashMap<>();
+		dir.put("U", new int[] {-1,0});
+		dir.put("R", new int[] {0,1});
+		dir.put("D", new int[] {1,0});
+		dir.put("L", new int[] {0,-1});
+	}
+
+	/**
+	 * Moves the snake.
+	 * 
+	 * @param direction - 'U' = Up, 'L' = Left, 'R' = Right, 'D' = Down
+	 * @return The game's score after the move. Return -1 if game over. Game over when snake crosses
+	 *         the screen boundary or bites its body.
+	 */
+	public int move(String direction) {
+		int[] head = snake.getFirst();
+		int[] inc = dir.get(direction);
+		int[] newHead = {head[0] + inc[0], head[1] + inc[1]};
+		
+		if(!isvalid(newHead)) {
+			return -1;
+		} else {
+			if(index < food.length && newHead[0] == food[index][0] && newHead[1] == food[index][1]) {
+				snake.addFirst(newHead);
+				index++;
+				return ++score;
+			} else {
+				snake.removeLast();
+				for(int[] b: snake) {
+					// check if crashes with itself
+					if(newHead[0] == b[0] && newHead[1] == b[1]) {
+						return -1;
+					}
+				}
+				snake.addFirst(newHead);
+			}
+		}
+		return score;
 	}
 	
-	public int move(String direction) {
-		int []pos = snake.get(snake.size()-1);
-		int []dir = map.get(direction);
-		int x = pos[0] + dir[0], y = pos[1] + dir[1];
-		if(x < 0 || x >= height || y < 0 || y >= width)
-			return -1;
-		snake.add(new int[] {x,y});
-		if(x == food[index][0] && y == food[index][1]) {
-			index++;
-			return index;
-		} else {
-			snake.remove(0);
-		}
-		return 0;
+	private boolean isvalid(int[] p) {
+		return (p[0] >= 0 && p[0] < height && p[1] >= 0 && p[1] < width);
 	}
 }
 

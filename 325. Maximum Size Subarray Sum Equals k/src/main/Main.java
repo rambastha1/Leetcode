@@ -16,10 +16,11 @@ class Solution {
 		for(int i = 0;i < nums.length;i++) {
 			curr += nums[i];
 			if(curr == k)
-				ans = Math.max(ans, i+1);
+				ans = i+1;
 			if(map.containsKey(curr-k))
 				ans = Math.max(ans, i - map.get(curr-k));
-			map.put(curr, i);
+			if(!map.containsKey(curr))
+				map.put(curr, i);
 		}
 		return ans;
 	}

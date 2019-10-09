@@ -26,8 +26,6 @@ class Solution {
 	public boolean isReflected(int[][] points) {
 		if(points.length == 0)
 			return true;
-		if(points.length == 1)
-			return false;
 		
 		int n = points.length;
 		//y -> list of x

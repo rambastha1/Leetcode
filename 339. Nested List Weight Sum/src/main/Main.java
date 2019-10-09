@@ -1,7 +1,9 @@
 package main;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 /*
  * Given a nested list of integers, return the sum of all integers in the list weighted by their depth.
@@ -29,22 +31,25 @@ interface NestedInteger {
 }
 
 class Solution {
-
     public int depthSum(List<NestedInteger> nestedList) {
-    	return dfs(nestedList, 1);
-    }
-    
-    int dfs(List<NestedInteger> nestedList, int depth) {
-    	int ans = 0;
-    	for(NestedInteger in : nestedList) {
-    		if(in.isInteger()) 
-    			ans += in.getInteger()*depth;
-    		else
-    			dfs(nestedList, depth+1);
+    	if(nestedList == null)
+    		return 0;
+    	int sum = 0, level = 1;
+    	Queue<NestedInteger> q = new LinkedList<>(nestedList);
+    	while(!q.isEmpty()) {
+    		int size = q.size();
+    		for(int i = 0;i < size;i++) {
+    			NestedInteger ni = q.poll();
+    			if(ni.isInteger()) {
+    				sum += ni.getInteger()*level;
+    			} else {
+    				q.addAll(ni.getList());
+    			}
+    		}
+    		level++;
     	}
-    	return ans;
+    	return sum;
     }
-    
 }
 
 public class Main {
