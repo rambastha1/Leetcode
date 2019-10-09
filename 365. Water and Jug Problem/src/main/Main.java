@@ -6,6 +6,16 @@ import java.util.Queue;
 import java.util.Set;
 
 // https://leetcode.com/problems/water-and-jug-problem/discuss/83715/Math-solution-Java-solution
+/*
+ * Bézout's identity (also called Bézout's lemma) is a theorem in the elementary theory of numbers:
+
+let a and b be nonzero integers and let d be their greatest common divisor. Then there exist integers x
+and y such that ax+by=d
+
+In addition, the greatest common divisor d is the smallest positive integer that can be written as ax + by
+
+every integer of the form ax + by is a multiple of the greatest common divisor d.
+ */
 class Solution {
 	
 	// GCD z should be multiple of GCD of x and y
