@@ -25,17 +25,18 @@ class Solution {
 	public List<List<Integer>> getFactors(int n) {
 		List<List<Integer>> res = new ArrayList<>();
 		dfs(n, res, new ArrayList<>(), 2);
-		res.remove(res.size()-1);
+		//res.remove(res.size()-1);
 		return res;
 	}
 	
 	void dfs(int n, List<List<Integer>> res, List<Integer> curr, int num) {
 		if(n == 1) {
-			res.add(new ArrayList<>(curr));
+			if(curr.size() > 1)
+				res.add(new ArrayList<>(curr));
 			return;
 		}
 		
-		for(int i = num;i <= n;i++) {
+		for(int i = num;i*i <= n;i++) {
 			if(n%i == 0) {
 				curr.add(i);
 				n /= i;

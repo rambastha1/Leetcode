@@ -42,11 +42,14 @@ class WordDistance {
 		List<Integer> list2 = map.get(word2);
 		int i = 0, j = 0, min = Integer.MAX_VALUE;
 		while(i < list1.size() && j < list2.size()) {
-			min = Math.abs(list1.get(i) - list2.get(j));
-			if(list1.get(i) <= list2.get(j))
+			int index1 = list1.get(i), index2 = list2.get(j);
+			if(list1.get(i) < list2.get(j)) {
+				min = Math.min(min, index2-index1);
 				i++;
-			else
+			} else {
+				min = Math.min(min, index1 - index2);
 				j++;
+			}
 		}
 		return min;
 	}

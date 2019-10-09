@@ -43,8 +43,11 @@ class Solution {
     			map.put("1", map.get("1"));
     		} else {
     			StringBuilder sb = new StringBuilder();
+    			sb.append("0");
     			for(int i = 1;i < str.length();i++) {
-    				sb.append((str.charAt(i)+26 - str.charAt(i-1))%26);
+    				int diff = str.charAt(i) - str.charAt(i-1);
+    				diff = diff > 0?diff:26+diff;
+    				sb.append(diff);
     			}
     			String key = sb.toString();
     			if(!map.containsKey(key)) {
@@ -65,7 +68,8 @@ class Solution {
 
 public class Main {
 	public static void main(String[] args) {
-		String []strings = {"abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"};
+		//String []strings = {"abc", "bcd", "acef", "xyz", "az", "ba", "a", "z"};
+		String []strings = {"a","bc","d"};
 		System.out.println(new Solution().groupStrings(strings));
 	}
 }

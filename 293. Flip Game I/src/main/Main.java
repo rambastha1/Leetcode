@@ -24,21 +24,17 @@ import java.util.List;
  */
 
 class Solution {
-    public List<String> generatePossibleNextMoves(String s) {
-    	List<String> res = new ArrayList<>();
-    	if(s == null || s.length() <= 1)
-    		return res;
-    	
-    	String temp = "--";
-    	
-    	for(int i = 0;i < s.length()-1;i++) {
-    		StringBuilder sb = new StringBuilder();
-    		sb.append(s.substring(0, i));
-    		sb.append(temp);
-    		sb.append(s.substring(i+temp.length(), s.length()));
-    		res.add(sb.toString());
-    	}
-    	return res;
+	public List<String> generatePossibleNextMoves(String s) {
+        List<String> answer = new ArrayList<>();
+        char[] arr = s.toCharArray();
+        for(int i = 0; i < arr.length - 1; i++){
+            if(arr[i] == '+' && arr[i+1] == '+'){
+                arr[i] = '-'; arr[i+1] = '-';
+                answer.add(new String(arr));
+                arr[i] = '+'; arr[i+1] = '+';
+            }
+        }
+        return answer;
     }
 }
 

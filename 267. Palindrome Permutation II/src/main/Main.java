@@ -20,6 +20,7 @@ import java.util.List;
 /* After successfully checking whether the string is palindrome permutable, build half string
  * put character with odd count in middle, and add reverse of string to make it palindrome
  * while creating half string count[c] will also get half
+ * https://leetcode.com/problems/palindrome-permutation-ii/discuss/69696/AC-Java-solution-with-explanation
  */
 
 class Solution {
@@ -37,36 +38,37 @@ class Solution {
 			return res;
 		
 		// build half string
-		String mid = "";
-		int len = 0;
+		StringBuilder sb = new StringBuilder();
+		List<Character> list = new ArrayList<>();
+		/* odd count character need to be at center, even can be added one at start other at end to make 
+		 * palindrome
+		 */
 		for(int i = 0;i < 128;i++) {
 			if(count[i] > 0) {
 				// odd
-				if((count[i] & 1) == 1) {
-					mid = "" + (char)i;
+				if(count[i]%2 == 1) {
+					sb.append((char)i);
 					count[i]--;
-				}
-				count[i] /= 2;
-				len++;
+				} 
 			}
 		}
-		
-		dfs(mid, len, count, res, "");
+		// sb contains all characters with odd count these need to be at center
+		dfs(res, count, s.length(), sb.toString());
 		return res;
 	}
 	
-	void dfs(String mid, int len, int []count, List<String> res, String s) {
+	void dfs(List<String> res, int []count, int len, String s) {
 		if(s.length() == len) {
-			StringBuilder sb = new StringBuilder(s).reverse();
-			res.add(s + mid + sb.toString());
+			res.add(s);
 			return;
 		}
 		
 		for(int i = 0;i < 128;i++) {
 			if(count[i] > 0) {
-				count[i]--;
-				dfs(mid, len, count, res, s+(char)i);
-				count[i]++;
+				// two because one added at start and another at end to make palindrome
+				count[i] -= 2;
+				dfs(res, count, len, (char)i + s + (char)i);
+				count[i] += 2;
 			}
 		}
 	}

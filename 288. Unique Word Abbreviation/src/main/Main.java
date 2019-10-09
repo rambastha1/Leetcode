@@ -32,10 +32,12 @@ class ValidWordAbbr {
 		map = new HashMap<>();
 		for(String word : dictionary) {
 			String abbr = toAbbr(word);
-			if(!map.containsKey(abbr))
+			if(!map.containsKey(abbr)) {
 				map.put(abbr, word);
-			else
-				map.put(abbr, "");
+			} else {
+				if(!map.get(abbr).equals(word))
+					map.put(abbr, "");
+			}
 		}
 	}
 	

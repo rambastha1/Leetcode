@@ -18,7 +18,7 @@ class Solution {
 	
 	//Part I word1 and word2 are different
     public int shortestDistance(String[] words, String word1, String word2) {
-    	int w1 = -1, w2 = -1, min = Integer.MAX_VALUE;;
+    	int w1 = -1, w2 = -1, min = words.length;
     	for(int i = 0;i < words.length;i++) {
     		if(words[i].compareTo(word1) == 0)
     			w1 = i;

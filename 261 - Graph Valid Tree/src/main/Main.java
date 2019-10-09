@@ -30,7 +30,8 @@ class Solution {
 				return false;
 			union(i, j, parent, rank);
 		}
-		return true;
+		//this check for disconnected graph
+		return edges.length == n-1;
 	}
 	
 	int find(int i, int []parent) {

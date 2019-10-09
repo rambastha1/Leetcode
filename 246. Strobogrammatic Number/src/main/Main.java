@@ -16,17 +16,13 @@ class Solution {
     	map.put('8', '8');
     	map.put('6', '9');
     	map.put('9', '6');
-    	int x = Integer.valueOf(num);
-    	char []arr = num.toCharArray();
+    	
     	int l = 0, r = num.length()-1;
     	while(l <= r) {
-    		char a = num.charAt(l), b = num.charAt(r);
-    		
-    		if(!map.containsKey(a) || !map.containsKey(b))
+    		if(!map.containsKey(num.charAt(l)) || map.get(num.charAt(l)) != num.charAt(r))
     			return false;
-    		if(a == map.get(a) || b == map.get(b) || a ==map.get(b) && b == map.get(a)) {
-    			l++; r--;
-    		}
+    		l++;
+    		r--;
     	}
     	return true;
     }

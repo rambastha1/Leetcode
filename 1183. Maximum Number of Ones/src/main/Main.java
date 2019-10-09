@@ -9,7 +9,11 @@ class Solution {
     public int maximumNumberOfOnes(int width, int height, int sideLength, int maxOnes) {
         if(width == 1 || height == 1 || sideLength == 1 && maxOnes > 1 || maxOnes == 0 || maxOnes > sideLength*sideLength)
         	return 0;
-        
+        /* from video, dp[i][j] contains frequency of indices occuring
+         * fill original array with array of sidelength*sidelength
+         * there will be multiple such array, get frequency and use pq
+         * 
+         */
     	int [][]dp = new int[sideLength][sideLength];
     	for(int i = 0;i < width;i++) {
     		for(int j = 0;j < height;j++) {
