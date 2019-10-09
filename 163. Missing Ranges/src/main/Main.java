@@ -10,39 +10,66 @@ import java.util.ArrayList;
  */
 
 class Solution {
-	public List<String> findMissingRanges(int[] nums, int lower, int upper) {
-        List<String> res = new ArrayList<String>();
-        int next_ele = lower;
-        for (int i = 0; i < nums.length; i++) {
-            // 1. We don't need to add [Integer.MAX_VALUE, ...] to result
-            if(lower == Integer.MAX_VALUE) return res;
-            if (nums[i] < next_ele) {
-                continue;
+    public List<String> findMissingRanges(int[] nums, int lower, int upper) {
+        List<String> res = new ArrayList<>();
+        
+        if (nums.length == 0) {
+            if (lower > upper) return res;
+            if (lower == upper) {
+                res.add(String.valueOf(lower));
+                return res;
             }
-            if (nums[i] == next_ele) {
-                next_ele++;
-                continue;
-            }
-            /*
-             * means next_ele > nums[i]
-             * No need to traverse from next_ele to nums[i]
-             */
-            
-            res.add(getRange(next_ele, nums[i] - 1));
-            // 2. We don't need to proceed after we have process Integer.MAX_VALUE in array
-            if(nums[i] == Integer.MAX_VALUE) return res;
-            //directly start from nums[i]+1
-            next_ele = nums[i] + 1;
+            res.add(lower + "->" + upper);
+            return res;
         }
         
-        if (next_ele <= upper) {
-            res.add(getRange(next_ele, upper));
+        
+        int start = 0;
+        int end =  nums.length - 1;
+        while (start <= end && nums[start] < lower) 
+        	start++;
+        while (start <= end && nums[end] > upper) 
+        	end--;
+        
+        if (start > end) 
+        	return res;
+        
+        for (int i = start; i <= end; i++) {
+            if (i == start) {
+                if (nums[i] > lower) {
+                    if (nums[i] - 1 == lower) {
+                        res.add(String.valueOf(lower));
+                    } else {
+                        res.add(lower + "->" + (nums[i] - 1));
+                    }
+                }
+            }
+            if (i == end) {
+                if (nums[i] < upper) {
+                    if (nums[i] + 1 == upper) {
+                        res.add(String.valueOf(upper));
+                    } else {
+                        res.add((nums[i] + 1) + "->" + upper);
+                    }
+                }
+            }
+            
+            if (i >= start && i < end) {
+                if (((long)(nums[i]) + 1) >= (long)(nums[i + 1])) {
+                    continue;
+                }
+                
+                int lo = nums[i] + 1;
+                int hi = nums[i + 1] - 1;
+                if (lo == hi) {
+                    res.add(String.valueOf(lo));
+                } else {
+                    res.add(lo + "->" + hi);
+                }
+            }
         }
+        
         return res;
-    }
-    
-    public String getRange(int n1, int n2) {
-        return n1 == n2 ? String.valueOf(n1) : String.format("%d->%d" , n1, n2);
     }
 }
 
