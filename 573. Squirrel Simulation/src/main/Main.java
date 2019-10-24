@@ -37,6 +37,7 @@ class Solution {
     	int total_dist = 0, d = Integer.MIN_VALUE;
     	for(int []nut : nuts) {
     		total_dist += distance(nut, tree)*2;
+    		//distant from tree but closer to squirrel
     		d = Math.max(d, distance(nut, tree) - distance(nut, squirrel));
     	}
     	return total_dist-d;

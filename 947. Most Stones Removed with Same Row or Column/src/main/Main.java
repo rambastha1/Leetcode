@@ -49,6 +49,8 @@ class Solution {
 	 * is less than 10000. by adding 10000 to col, we make sure the minimum col (0) is 
 	 * larger than maximum row (9999), so that there is no overlap in the parent array.
 	 * same reason for choosing the parent array size to be 20000 (10000 * 2)
+	 * 
+	 * as row and column can have same values, add 10000 to col and then usual union find
 	 */
 	
     public int removeStones(int[][] stones) {   	

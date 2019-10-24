@@ -11,17 +11,16 @@ class Solution {
     		return 0;
     	if(A.length == 1)
     		return A[0]==S?1:0;
-    	Map<Integer, List<Integer>> map = new HashMap<>();
+    	// sum -> count
+    	Map<Integer, Integer> map = new HashMap<>();
     	int sum = 0, ans = 0;
     	for(int i = 0;i < A.length;i++) {
     		sum += A[i];
     		if(sum == S)
     			ans++;
     		if(map.containsKey(sum -S))
-    			ans += map.get(sum-S).size();
-    		if(!map.containsKey(sum))
-    			map.put(sum, new ArrayList<>());
-    		map.get(sum).add(i);
+    			ans += map.get(sum-S);
+    		map.put(sum, map.getOrDefault(sum, 0) + 1);
     	}
     	return ans;
     }

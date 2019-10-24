@@ -2,6 +2,13 @@ package main;
 
 // https://leetcode.com/problems/max-chunks-to-make-sorted-ii/discuss/298511/Java-Solution-beats-99.9-with-detailed-example-and-explanation
 
+/* For an element, if all the numbers to its left are smaller or equal to all the numbers to its right, 
+ * we can always insert a split point between the element and its next element which separate the array into two parts 
+ * and after we sort the two parts individually, the concatenation of them will be a sorted array.
+ * maxLeft[i] includes the i-th number itself but minRight[i +1] only counts the numbers to its right
+ * 
+ */
+
 class Solution {
 	// Time 0(N) Space 0(N)
     public int maxChunksToSorted(int[] arr) {

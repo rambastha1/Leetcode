@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 import java.util.TreeMap;
 
 // Follow up of 314
-
+// Y increses going bottom
 class Solution {
 	
 	class TreeNode {
@@ -19,16 +19,18 @@ class Solution {
 	public List<List<Integer>> verticalTraversal(TreeNode root) {
         TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map = new TreeMap<>();
         dfs(root, 0, 0, map);
-        List<List<Integer>> list = new ArrayList<>();
+        List<List<Integer>> res = new ArrayList<>();
         for (TreeMap<Integer, PriorityQueue<Integer>> ys : map.values()) {
-            list.add(new ArrayList<>());
+        	List<Integer> list = new ArrayList<>();
             for (PriorityQueue<Integer> nodes : ys.values()) {
                 while (!nodes.isEmpty()) {
-                    list.get(list.size() - 1).add(nodes.poll());
+                	//list.get(list.size() - 1) is last list in ans(list of list)
+                    list.add(nodes.poll());
                 }
             }
+            res.add(list);
         }
-        return list;
+        return res;
     }
     private void dfs(TreeNode root, int x, int y, TreeMap<Integer, TreeMap<Integer, PriorityQueue<Integer>>> map) {
         if (root == null) {
@@ -41,6 +43,7 @@ class Solution {
             map.get(x).put(y, new PriorityQueue<>());
         }
         map.get(x).get(y).offer(root.val);
+        // Y increases because treemap keep it sorted, its reverse of quesiton
         dfs(root.left, x - 1, y + 1, map);
         dfs(root.right, x + 1, y + 1, map);
     }

@@ -9,6 +9,7 @@ class Solution {
     	for(int i = 0;i < arr.length;i++) {
     		max = Math.max(max, arr[i]);
     		//This gives maximum subarray for which chunk should be 1 or it is decreasing subarray
+    		// i because arr[i] belongs to [0, len-1]
     		if(max == i)
     			ans++;
     	}

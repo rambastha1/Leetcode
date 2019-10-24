@@ -59,6 +59,7 @@ class Solution {
         for(int i = 24;i >= 0 && map[i] > 0;i--) {
         	idle -= Math.min(map[i], maxval);
         }
+        // idle is when left idle + time to  complete n tasks thus tasks.length
         return idle>0?idle+tasks.length:tasks.length;
 	}*/
 }

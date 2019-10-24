@@ -1,7 +1,6 @@
 package main;
 
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.PriorityQueue;
 import java.util.Queue;
 
 /* There is a ball in a maze with empty spaces and walls. The ball can go through empty spaces by 
@@ -62,69 +61,61 @@ import java.util.Queue;
 
 class Solution {
 		
-	class Point {
-		int start, end, dist;
-		String dir;
-		public Point(int start, int end, int dist, String dir) {
-			this.start = start;
-			this.end = end;
-			this.dist = dist;
-			this.dir = dir;
-		}
-	}
-	
 	public String findShortestWay(int[][] maze, int[] ball, int[] hole) {
-		
-		int [][]dirs = {{0,-1}, {-1,0}, {0,1}, {1,0}};
-		String []dir = {"l", "u", "r", "d"};
-		
-		Point h = new Point(hole[0], hole[1], Integer.MAX_VALUE,"z");
-		int m = maze.length, n = maze[0].length;
-		
-		int [][]dist = new int[m][n];
-		for(int []row : dist)
-			Arrays.fill(row, Integer.MAX_VALUE);
-		dist[ball[0]][ball[1]] = 0;
-		
-		Queue<Point> q = new LinkedList<>();
-		q.offer(new Point(ball[0], ball[1], 0, ""));
-		
-		while(!q.isEmpty()) {
-			Point p = q.poll();
-			for(int i = 0;i < 4;i++) {
-				int x = p.start + dirs[i][0];
-				int y = p.end + dirs[i][1];
-				int count = 0;
-				String str = p.dir + dir[i];
-				// Second comparison so that ball stops at hole
-				while(issafe(maze, m, n, x, y) && (x!= hole[0] || y != hole[1])) {
-					x += dirs[i][0];
-					y += dirs[i][1];
-					count++;
-				}
-				
-				if(x == hole[0] && y == hole[1]) {
-					if(p.dist+count < h.dist) {
-						h.dist = p.dist + count;
-						h.dir = str;
-					} else if(p.dist+count == h.dist) {
-						if(str.compareTo(h.dir) < 0)
-							h.dir = str;
-					}
-				}
-				
-				if(issafe(maze, m, n, x-dirs[i][0], y-dirs[i][1]) && dist[p.start][p.end] + count < dist[x-dirs[i][0]][y-dirs[i][1]]) {
-					dist[x-dirs[i][0]][y-dirs[i][1]] = dist[p.start][p.end] + count; 
-					q.offer(new Point(x-dirs[i][0], y-dirs[i][1], dist[x-dirs[i][0]][y-dirs[i][1]], str));
-				}
-			}
-		}
-		return h.dist == Integer.MAX_VALUE?"impossible":h.dir;
-	}
-	
-	boolean issafe(int [][]maze, int m, int n, int x, int y) {
-		return x >= 0 && x < m && y >= 0 && y < n && maze[x][y] == 0;
-	}
+        int m = maze.length, n = maze[0].length;
+        boolean[][] seen = new boolean[m][n];
+        Queue<Ball> q = new PriorityQueue<>();
+        q.offer(new Ball(ball[0], ball[1], 0, ""));
+        
+        while(!q.isEmpty()) {
+            Ball cur = q.poll();
+            if(cur.x == hole[0] && cur.y == hole[1])
+                return cur.dir;
+            seen[cur.x][cur.y] = true;
+            
+            for(int k = 0; k < 4; k++) {
+                int nx = cur.x;
+                int ny = cur.y;
+                int nd = cur.dist;
+                String ndir = cur.dir;
+                
+                while(nx+dirs[k][0] >= 0 && nx+dirs[k][0] < m && 
+                      ny+dirs[k][1] >= 0 && ny+dirs[k][1] < n && 
+                      maze[nx+dirs[k][0]][ny+dirs[k][1]] != 1) { 
+                    nx += dirs[k][0];
+                    ny += dirs[k][1];
+                    nd++;
+                    
+                    if(nx == hole[0] && ny == hole[1]) break;
+                } 
+                
+                if(!seen[nx][ny]) q.offer(new Ball(nx, ny, nd, ndir+dirct[k])); 
+            }
+        } 
+        
+        return "impossible";
+    }
+    
+    final private char[] dirct = {'d', 'l', 'r', 'u'};
+    final private int[][] dirs = {{1, 0}, {0, -1}, {0, 1}, {-1, 0}};
+    
+    class Ball implements Comparable<Ball> {
+        int x;
+        int y;
+        int dist;
+        String dir;
+        
+        public Ball(int x, int y, int dist, String dir) {
+            this.x = x;
+            this.y = y;
+            this.dist = dist;
+            this.dir = dir;
+        }
+        
+        public int compareTo(Ball other) {
+            return dist != other.dist? dist-other.dist : dir.compareTo(other.dir);
+        }
+    } 
 }
 
 public class Main {

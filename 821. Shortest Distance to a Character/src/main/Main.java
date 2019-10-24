@@ -4,7 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Solution {
+	
+	//0(N) solution two pass
+	// https://leetcode.com/problems/shortest-distance-to-a-character/discuss/125788/C%2B%2BJavaPython-2-Pass-with-Explanation
 	public int[] shortestToChar(String S, char C) {
+        int n = S.length();
+        int[] res = new int[n];
+        int pos = -n;
+        for (int i = 0; i < n; ++i) {
+            if (S.charAt(i) == C) pos = i;
+            res[i] = i - pos;
+        }
+        for (int i = n - 1; i >= 0; --i) {
+            if (S.charAt(i) == C)  pos = i;
+            res[i] = Math.min(res[i], Math.abs(i - pos));
+        }
+        return res;
+    }
+	
+	public int[] shortestToChar1(String S, char C) {
     	if(S == null || C == ' ' || S.length() == 0)
     		return new int[] {};
     	int n = S.length();

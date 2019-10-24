@@ -14,6 +14,14 @@ class Solution {
     	int sum = 0;
     	for(int a : A)
     		sum += a;
+    	/* length n/2 + 1 because how so ever we divide one of subarray will have length <= n/2
+    	 * in one case both have equal size i.e n/2 else one is always greater than other length
+    	 * Thus if we find one subarray we find other as well
+    	 * 
+    	 * 1st row sum of elements taken 0 elements at a time
+    	 * 2nd row sum of elements taken 1 elements at a time
+    	 * 3rd row sum of elements taken 2 elements at a time and so on
+    	 */
     	boolean [][]dp = new boolean[n/2+1][sum+1];
     	dp[0][0] = true;
     	for(int a : A) {
@@ -23,7 +31,12 @@ class Solution {
     			}
     		}
     	}
-    	
+    	/* totalSum/n = Asum/k = Bsum/(n-k), where k = A.size() and 1 <= k <= n/2;
+  		 * Asum = totalSum*k/n, which is an integer. So we have totalSum*k%n == 0;
+    	 */
+    	/* check first if this index can be split successfully then whether it can be done
+    	 * 
+    	 */
     	for(int i = 1;i <= n/2;i++) {
     		if((sum*i)%n == 0 && dp[i][(sum*i)/n])
     			return true;

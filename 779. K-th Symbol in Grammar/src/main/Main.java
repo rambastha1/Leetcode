@@ -17,8 +17,11 @@ class Solution {
     public int kthGrammar(int N, int K) {
     	if(N == 1)
     		return 0;
-    	if(K%2==0)
+    	if(K%2==0) {
+    		// This is right child. right child can be 0 iff parent is 1(1->10)
     		return kthGrammar(N-1, K/2)==0?1:0;
+    	}
+    	// left child is 0 iff parent is 0 (0->01)
     	return kthGrammar(N-1, (K+1)/2)==0?0:1; 
     }
 }
