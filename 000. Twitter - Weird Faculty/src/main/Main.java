@@ -1,5 +1,6 @@
 package main;
 
+// https://leetcode.com/discuss/interview-question/374440/Twitter-or-OA-2019-or-Weird-Faculty
 class Solution {
 	public int exam(int []A) {
 		int sum = 0, n = A.length;

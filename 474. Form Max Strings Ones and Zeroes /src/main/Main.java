@@ -11,7 +11,12 @@ class Solution {
     		int []count = new int[2];
     		for(char c : s.toCharArray())
     			count[c-'0']++;
-    		
+    		// memo[i][j] = the max number of strings that can be formed with i 0's and j 1's
+    	    // from the first few strings up to the current string s
+    	    // Catch: have to go from bottom right to top left
+    	    // Why? If a cell in the memo is updated(because s is selected),
+    	    // we should be adding 1 to memo[i][j] from the previous iteration (when we were not considering s)
+    	    // If we go from top left to bottom right, we would be using results from this iteration => overcounting
     		for(int i = m;i >= count[0];i--) {
     			for(int j = n;j >= count[1];j--) {
     				dp[i][j] = Math.max(dp[i][j], 1 + dp[i - count[0]][j - count[1]]);

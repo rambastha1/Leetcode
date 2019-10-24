@@ -44,11 +44,83 @@ package main;
  * 
  * Since after range update sum(i) becomes point sum
  * Thus sum(i) = bit1[i]*i - bit2[i]
+ * 
+ * https://leetcode.com/problems/range-addition/discuss/84217/Java-O(K-%2B-N)time-complexity-Solution
+ * https://leetcode.com/articles/range-addition/
+ */
+
+/* Formal Explanation
+
+For each update query (start, end, val)(start,end,val) on the array arrarr, the goal is to achieve the result:
+
+arr_i = arr_i + val forall  i \in [start, end]
+Applying the final transformation, ensures two things:
+
+1) It carries over the +val+val increment over to every element arr_i ∀ i ≥ start.
+2) It carries over the -val−val increment (equivalently, a +val+val decrement) over to every element arr_j ∀ j > end.
+
+The net result is that:
+
+arr[i] = arr[i] +val ∀i∈[start,end] 
+arr[j] = arr[j] + val - val = arr[j] ∀i∈(end,length)
+ 
+
+which meets our end goal. It is easy to see that the updates over a range did not carry over beyond it due to the 
+compensating effect of the -val−val increment over the +val+val increment.
+
+It is good to note that this works for multiple update queries because the particular binary operations here 
+(namely addition and subtraction):
+
+are closed over the entire domain of Integers. (A counter example is division which is not closed over all Integers).
+
+are complementary operations. (As a counter example multiplication and division are not always complimentary due to 
+possible loss of precision when dividing Integers).
+
+Final Transformation. The cumulative sum of the entire array is taken (0 - based indexing)
+
+arr[i] = arr[i] + arr[i-1]  ∀ i ∈ [1,n)
+
+Complexity Analysis
+
+Time complexity : O(n + k)O(n+k). Each of the kk update operations is done in constant O(1)O(1) time. 
+The final cumulative sum transformation takes O(n)O(n) time always.
+
+Space complexity : O(1)O(1). No extra space required.
+ * 
  */
 
 class Solution {
+	
+	/* just like BIT, add arr[start] with val and arr[end+1] with -val
+	 * at time to get array apply update and return array i.e lazy update
+	 */
+	
+	public int[] getModifiedArray(int length, int[][] updates) {
+		int []res = new int[length];
+		for(int []u : updates) {
+			int start = u[0];
+			int end = u[1];
+			int val = u[2];
+			res[start] += val;
+			
+			if(end < length-1) {
+				res[end+1] += -val;
+			}
+		}
+		
+		int sum = 0;
+		for(int i = 0;i < length;i++) {
+			sum += res[i];
+			res[i] = sum;
+		}
+		return res;
+	}
+	
+	
+	
+	// BIT Method
 	int []bit1, bit2;
-    public int[] getModifiedArray(int length, int[][] updates) {
+    public int[] getModifiedArray1(int length, int[][] updates) {
     	int []res = new int[length];
     	bit1 = new int[length+1];
     	bit2 = new int[length+1];

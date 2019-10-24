@@ -16,6 +16,7 @@ class Solution {
     	if(index == 0)
     		index = base;
     	
+    	// Easily, we know the 61st digit in 3-digit number belongs to number = 100 + 61 / 3 = 100 + 20 = 120
     	num += (index== base)?(n/base)-1:n/base;
     	// index will become unit's digit
     	for(long i = index;i < base;i++)

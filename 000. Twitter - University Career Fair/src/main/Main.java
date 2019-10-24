@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+// https://leetcode.com/discuss/interview-question/374846/Twitter-or-OA-2019-or-University-Career-Fair
 class Solution {
 	public int maxevent(int []arrival, int []duration) {
 		List<int []> list = new ArrayList<int[]>();
