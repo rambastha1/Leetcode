@@ -2,20 +2,15 @@ package main;
 
 class Solution {
 	
-	int max = 0;
-    public boolean searchMatrix(int[][] matrix, int target) {
-    	if(matrix.length == 0 || matrix[0].length == 0)
-    		return false;
-    	int i = matrix.length-1, j = 0;
-    	while(i >= 0 && j < matrix[0].length) {
-    		if(matrix[i][j] == target)
-    			return true;
-    		if(matrix[i][j] < target)
-    			j++;
-    		else
-    			i--;
-    	}
-    	return false;
+	public boolean searchMatrix(int[][] a, int target) {
+        if(a == null || a.length == 0) return false;
+        
+        for(int i = 0, j = a[0].length - 1; i < a.length && j >= 0; ) {
+            if(a[i][j] > target) j--;
+            else if(a[i][j] < target) i++;
+            else return true;
+        }
+        return false;
     }
 }
 
