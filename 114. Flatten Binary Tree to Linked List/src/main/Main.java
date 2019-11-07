@@ -32,6 +32,7 @@ class Solution {
     	
     	flatten(left);
     	flatten(right);
+    	// for leaves
     	if(left == null && right == null) {
     		prev = root;
     	}

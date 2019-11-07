@@ -2,6 +2,10 @@ package main;
 
 // https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/discuss/356057/Java-O(d-*-f-*-target)-dp-straightforward-and-fast
 // https://leetcode.com/problems/number-of-dice-rolls-with-target-sum/discuss/355940/C%2B%2B-Coin-Change-2
+
+/* Just like coin change 2, here is target. However, total number of coins that can be used should be equal to number of dice d 
+ * 
+ */
 class Solution {
 	public int numRollsToTarget(int d, int f, int target) {
     	int []dp = new int[target+1];
