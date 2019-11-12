@@ -12,9 +12,20 @@ import java.util.List;
  * https://www.geeksforgeeks.org/bridge-in-a-graph/
  * https://www.geeksforgeeks.org/check-removing-given-edge-disconnects-given-graph/
  * https://leetcode.com/discuss/interview-question/372581
+ * https://www.youtube.com/watch?v=TyWtx7q2D7Y&feature=emb_logo
+ * https://www.youtube.com/watch?time_continue=3&v=aZXi1unBdJA&feature=emb_logo
+ */
+
+/* idea is to find lowest vertex that can be reached from current vertex
+ * time is used to gather their discovery time so that dfs doesn't mess with disc and low value
+ * if for any vertex lowest vertex reachable time > discovery time of its parent, it means parent is articulation point
+ * 
+ * If there are other paths between src and dest, and dest is not parent of src, 
+ * low[src] = Math.min(low[src], disc[dest]);
  */
 
 class Solution {
+	// Time 0(V+E)
 	private List<Integer> []graph;
 	int time = 0;
 	

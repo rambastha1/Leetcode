@@ -48,6 +48,7 @@ class Solution {
 				parent[dest] = src;
 				dfs(dest, visited, disc, low, parent, ap);
 				low[src] = Math.min(low[src], low[dest]);
+				// for root
 				if(parent[src] == -1 && child > 1)
 					ap[src] = true;
 				if(parent[src] != -1 && low[dest] >= disc[src])

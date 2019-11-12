@@ -14,7 +14,16 @@ import java.util.List;
  * https://leetcode.com/discuss/interview-question/372581
  * https://www.geeksforgeeks.org/tarjan-algorithm-find-strongly-connected-components/
  * https://www.youtube.com/watch?v=ju9Yk7OOEb8
+ * https://www.youtube.com/watch?v=TyWtx7q2D7Y&feature=emb_logo
+ * https://www.youtube.com/watch?time_continue=3&v=aZXi1unBdJA&feature=emb_logo
+ */
+
+/* idea is to find lowest vertex that can be reached from current vertex
+ * time is used to gather their discovery time so that dfs doesn't mess with disc and low value
+ * if for any vertex lowest vertex reachable time > discovery time of its parent, it means parent is articulation point
  * 
+ * If there are other paths between src and dest, and dest is not parent of src, 
+ * low[src] = Math.min(low[src], disc[dest]);
  */
 
 class Solution {
@@ -25,6 +34,7 @@ class Solution {
     public List<List<Integer>> criticalConnections(int n, List<List<Integer>> connections) {
     	List<List<Integer>> res = new ArrayList<>();
 		build(n, connections);
+		//n+1 because vertex are form 1-n
 		boolean []visited = new boolean[n+1], ap = new boolean[n+1];
 		int []discovery = new int[n+1], low = new int[n+1], parent = new int[n+1];
 		Arrays.fill(parent, -1);
