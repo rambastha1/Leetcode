@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,32 +26,28 @@ class Solution {
 	
 	public TreeNode root;
 	
-	Map<Integer, List<TreeNode>> memo = new HashMap();
     public List<TreeNode> allPossibleFBT(int N) {
-        if (!memo.containsKey(N)) {
-            List<TreeNode> ans = new LinkedList();
-            if (N == 1) {
-                ans.add(new TreeNode(0));
-            } else if (N % 2 == 1) {
-                for (int x = 0; x < N; ++x) {
-                	// x left childs then total number of right = N -1 - x
-                    int y = N - 1 - x;
-                    List<TreeNode> left =  allPossibleFBT(x);
-                    List<TreeNode> right =  allPossibleFBT(y);
-                    
-                    for (TreeNode l : left) {
-                        for (TreeNode r : right) {
-                            TreeNode node = new TreeNode(0);
-                            node.left = l;
-                            node.right = r;
-                            ans.add(node);
-                        }
-                    }
-                }
-            }
-            memo.put(N, ans);
-        }
-        return memo.get(N);
+    	List<TreeNode> res = new ArrayList<>();
+    	if(N == 1) {
+    		res.add(new TreeNode(0));
+    		return res;
+    	}
+    	
+    	// Number of nodes in Full binary Tree is odd
+    	for(int left = 1;left <= N-1;left+=2) {
+    		int right = N-1-left;
+    		List<TreeNode> leftN = allPossibleFBT(left);
+    		List<TreeNode> rightN = allPossibleFBT(right);
+    		for(TreeNode l : leftN) {
+    			for(TreeNode r : rightN) {
+    				TreeNode node = new TreeNode(0);
+    				node.left = l;
+    				node.right = r;
+    				res.add(node);
+    			}
+    		}
+    	}
+    	return res;
     }
 	
 	void levelorder(TreeNode node) {

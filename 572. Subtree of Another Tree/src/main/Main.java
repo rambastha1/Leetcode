@@ -13,7 +13,26 @@ class Solution {
 		TreeNode(int x) { val = x; }
 	}
 	
-    public boolean isSubtree(TreeNode s, TreeNode t) {
+	public boolean isSubtree(TreeNode s, TreeNode t) {
+		if(s == null)
+			return false;
+			
+		if(issame(s, t) || isSubtree(s.left, t) || isSubtree(s.right, t))
+			return true;
+		return false;
+	}
+	
+	private boolean issame(TreeNode s, TreeNode t) {
+		if(s == null && t == null)
+			return true;
+		if(s == null || t == null)
+			return false;
+		if(s.val != t.val)
+			return false;
+		return issame(s.left, t.left) && issame(s.right, t.right);
+	}
+	
+	public boolean isSubtree1(TreeNode s, TreeNode t) {
         String tree1 = preorder(s, true);
 		String tree2 = preorder(t, true);
 		return tree1.indexOf(tree2) >= 0;

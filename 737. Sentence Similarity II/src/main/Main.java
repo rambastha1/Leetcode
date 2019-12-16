@@ -31,11 +31,15 @@ import java.util.Map;
  */
 
 class Solution {
+	// run through above example
 	public boolean areSentencesSimilarTwo(String[] words1, String[] words2, List<List<String>> pairs) {
-		if(words1.length != words2.length) return false;
+		if(words1.length != words2.length) 
+			return false;
+		// word -> parent word
 		Map<String, String> map = new HashMap<>();
 		for(List<String> pair : pairs) {
 			String str1 = find(map, pair.get(0));
+			// notice difference
 			String str2 = find(map, find(map, pair.get(1)));
 			if(!str1.equals(str2))
 				map.put(str1, str2);

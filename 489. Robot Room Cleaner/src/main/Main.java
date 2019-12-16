@@ -98,7 +98,7 @@ class Solution {
     	
     	for(int i = 0;i < 4;i++) {
     		if(robot.move()) {
-    			// if i used insted dor stack overflow exception why?
+    			// if i used instead dir stack overflow exception why?
     			int X = x + dirs[dir][0];
     			int Y = y + dirs[dir][1];
     			backtrack(robot, visited, dirs, X, Y, dir);

@@ -19,7 +19,7 @@ import java.util.List;
 
 
 class Solution {
-	/* keep track of number of 1's in row, col, diag and anti-diag
+	/* from every a[i][j], keep track of number of 1's in row, col, diag and anti-diag from that index
 	 * find maximum
 	 * Single Pass (row*col)
 	 */

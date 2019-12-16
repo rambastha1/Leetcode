@@ -11,7 +11,6 @@ bulbs between them that are all turned off.
 
 If there isn't such day, return -1.
 
- 
 
 Example 1:
 
@@ -45,7 +44,7 @@ bulbs is a permutation of numbers from 1 to N.
  * That means days[i] is the blooming day of the bulb in position i+1. 
  * We just need to find a subarray days[left, left+1,..., left+k-1, right] which satisfies: for any i = left+1,..., left+k-1, 
  * we can have days[left] < days[i] && days[right] < days[i]. Then, the result is max(days[left], days[right]).
- * If all these i have days[i] greter than both days[left] and days[right] it means when left and right were switched on,
+ * If all these i have days[i] greater than both days[left] and days[right] it means when left and right were switched on,
  * these were off thus ans
  * https://leetcode.com/problems/k-empty-slots/discuss/107931/JavaC%2B%2B-Simple-O(n)-solution
  */

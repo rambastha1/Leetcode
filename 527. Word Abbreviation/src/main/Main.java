@@ -6,7 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/* Given an array of n distinct non-empty strings, you need to generate minimal possible abbreviations for every word following rules below.
+/* Given an array of n distinct non-empty strings, you need to generate minimal possible abbreviations for 
+ * every word following rules below.
 
 Begin with the first character and then the number of characters abbreviated, which followed by the last character.
 If there are any conflict, that is more than one words share the same abbreviation, a longer prefix is used instead of 

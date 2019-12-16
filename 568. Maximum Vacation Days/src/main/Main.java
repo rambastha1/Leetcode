@@ -70,12 +70,12 @@ class Solution {
 	/* The idea behind this approach is as follows. The maximum number of vacations that can be taken given we start from the ith
 	 * city in jth week is not dependent on the the vacations that can be taken in the earlier weeks. 
 	 * It only depends on the number of vacations that can be taken in the upcoming weeks and also on the 
-	 * connections between the various cities(flights).
+	 * connections between the various cities(flights). Thus we move backwards.
 	 * 
-	 * Therefore, we can make use of a 2-D dpdp, in which dp[i][k]dp[i][k] represents the maximum number of vacations 
-	 * which can be taken starting from the ith city in the kth week. This dpdp is filled in the 
+	 * Therefore, we can make use of a 2-D dp, in which dp[i][k] represents the maximum number of vacations 
+	 * which can be taken starting from the ith city in the kth week. This dp is filled in the 
 	 * backward manner(in terms of the week number) because we cannot fill in forward manner subproblem possible only in backward
-	 * While filling up the entry for dp[i][k]dp[i][k], we need to consider the following cases:
+	 * While filling up the entry for dp[i][k], we need to consider the following cases:
 	 * 1.We start from the ith city in the kth week and stay in the same city for the (k+1)th week. 
 	 * Thus, the factor to be considered for updating the 
 	 * dp[i][k] entry will be given by: days[i][k] + dp[i, k+1]
@@ -89,16 +89,16 @@ class Solution {
 	 * we need to choose the destination city that leads to maximum no. of vacations. 
 	 * Thus, the factor to be considered here, is given by: maxdays[j][k]+days[j,k+1], for all i, j, k 
 	 * satisfying flights[i][j]=1, 0 ≤ i,j ≤ n, where0≤i,j≤n,wheren$$ refers to the number of cities.
-	 * At the end, we need to find the maximum out of these two factors to update the dp[i][k]dp[i][k] value.
-	 * In order to fill the dpdp values, we start by filling the entries for the last week and proceed backwards. 
-	 * At last, the value of dp[0][0]dp[0][0] gives the required result.
+	 * At the end, we need to find the maximum out of these two factors to update the dp[i][k] value.
+	 * In order to fill the dp values, we start by filling the entries for the last week and proceed backwards. 
+	 * At last, the value of dp[0][0] gives the required result.
 	 */
 	// used array of cities not week// time 0(N^2*K) Space (N)
-	/* Now, dp[i]dp[i] is used to store the number of vacations that provided that we start from the ith city in the current week. 
+	/* Now, dp[i] is used to store the number of vacations that provided that we start from the ith city in the current week. 
 	 * The procedure remains the same as that of the previous approach, 
 	 * except that we make the updation in the same dp row again and again. 
 	 * In order to store the dp values corresponding to the current week temporarily, 
-	 * we make use of a temptemp array so that the original dpdp entries corresponding to week+1week+1 aren't altered.
+	 * we make use of a temp array so that the original dp entries corresponding to week+1 aren't altered.
 	 * 
 	 * 
 	 * https://leetcode.com/articles/maximum-vacation-days/
