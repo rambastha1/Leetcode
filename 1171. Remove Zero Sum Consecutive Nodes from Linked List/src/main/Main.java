@@ -10,7 +10,11 @@ class Solution {
 		ListNode next;
 		ListNode(int x) { val = x; }
 	}
-	
+	/* if 1->2->-3->3->1->null
+	 * removes 1->2->-3 resulting in 3->1
+	 * when encounter already calculated sum, remove nodes from that to curr
+	 * 
+	 */
 	public ListNode removeZeroSumSublists(ListNode head) {
     	if(head == null || (head.next == null && head.val == 0))
     		return null;
@@ -57,12 +61,12 @@ class Solution {
 public class Main {
 	public static void main(String[] args) {
 		Solution s = new Solution();
-		s.head = s.new ListNode(2);
+		s.head = s.new ListNode(1);
 		s.head.next = s.new ListNode(2);
-		s.head.next.next = s.new ListNode(-2);
-		s.head.next.next.next = s.new ListNode(1);
-		s.head.next.next.next.next = s.new ListNode(-1);
-		s.head.next.next.next.next.next = s.new ListNode(-1);
+		s.head.next.next = s.new ListNode(-3);
+		s.head.next.next.next = s.new ListNode(3);
+		s.head.next.next.next.next = s.new ListNode(1);
+		//s.head.next.next.next.next.next = s.new ListNode(-1);
 		s.display(s.head);
 		s.head = s.removeZeroSumSublists(s.head);
 		s.display(s.head);
