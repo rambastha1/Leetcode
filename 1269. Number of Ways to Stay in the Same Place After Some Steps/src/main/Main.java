@@ -5,7 +5,7 @@ import java.util.Arrays;
 /* In the first loop, j indicating how much step taken so far.
 In the second loop, i indicating the current location we are focusing on. We are trying to calculate the 
 total number of ways to get location i using j steps.
-Notice that we are picking the smaller number between n-1 and steps-j. steps-j means that we cannot go steps-jfar 
+Notice that we are picking the smaller number between n-1 and steps-j. steps-j means that we cannot go steps-j far 
 from 0 since we need j steps to get back. This will boost up the speed dramatically.
  * 
  */

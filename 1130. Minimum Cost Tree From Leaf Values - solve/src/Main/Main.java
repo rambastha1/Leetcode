@@ -10,9 +10,9 @@ class Solution {
     	stack.push(Integer.MAX_VALUE);
     	
     	int res = 0;
-    	for(int a : arr) {
-    		while(!stack.isEmpty() && stack.peek() <= a) {
-    			int top = stack.pop();
+    	for(int ele : arr) {
+    		while(!stack.isEmpty() && stack.peek() <= ele) {
+    			int a = stack.pop();
     			// stack.peek is first min to left and a is first max to the right
     			// top is removed
     			/*
@@ -29,9 +29,14 @@ the first bigger number on the right.
 
 The cost to remove a is a * min(left, right).
     			 */
-    			res += top * Math.min(stack.peek(), a);
+    			/* trying to remove a with minimum cost.. cost is a*b ie. greater element on left side of a or on right side
+    			 * to minimize cost minimize b, thus stack.peek() is greater element on left side of a
+    			 * ele -> greater element at right side of a
+    			 * minimum greater =  Math.min(stack.peek(), ele)
+    			 */
+    			res += a * Math.min(stack.peek(), ele);
     		}
-    		stack.push(a);
+    		stack.push(ele);
     	}
     	
     	// keep removing 

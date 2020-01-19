@@ -40,7 +40,7 @@ The given edges form an undirected tree.
  */
 
 // https://leetcode.com/problems/tree-diameter/discuss/418982/Java-Depth-of-the-Tree-solution-Time-O(N)-Easy-to-understand
-/* Travese all the nodes of the tree. The diameter of the tree is maximum of the longest path through each node.
+/* Traverse all the nodes of the tree. The diameter of the tree is maximum of the longest path through each node.
 Longest path through a node is sum of top 2 depths of children's tree.
  * Similar logic to 543. Diameter of Binary Tree
  * Longest diameter in n-ary tree
@@ -80,6 +80,7 @@ class Solution {
     	}
     	int longest = max + secmax;
     	this.diameter = Math.max(this.diameter, longest);
+    	// important line return maximum height
     	return max + 1;
     }
 }

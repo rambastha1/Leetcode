@@ -50,6 +50,12 @@ Constraints:
 
 class Solution {
 	// Time 0(NlgSum) Sum -> sum of sweetness
+	
+	/* we need to maximize the minimum sum per piece
+	 * minimum sum per pieces = l = 0 , maximum = r = sum/K+1
+	 * mid -> find sum per piece 
+	 * if number of pieces exceeds K -> sum per piece needs to increase else decrease
+	 */
     public int maximizeSweetness(int[] sweetness, int K) {
     	int sum = 0;
     	for(int a : sweetness)

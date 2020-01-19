@@ -1,7 +1,7 @@
 package main;
 
 /* Given a non-decreasing array of positive integers nums and an integer K, find out if this array can be divided into one 
- * or more disjoint increasing subsequences of length at least K.
+ * or more disjoint strictly increasing subsequences of length at least K.
 
  
 
