@@ -7,6 +7,8 @@ import java.util.TreeMap;
 class SummaryRanges {
 
     /** Initialize your data structure here. */
+	// value -> start, end
+	// map key will always point to lower key
 	TreeMap<Integer, int[]> map;
     public SummaryRanges() {
         this.map = new TreeMap<>();

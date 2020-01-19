@@ -1,6 +1,8 @@
 package main;
 
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 //https://www.geeksforgeeks.org/serialize-deserialize-binary-tree/
 
@@ -13,36 +15,37 @@ class Codec {
 	}
 	
 	TreeNode root;
-	static ArrayList<String> list = new ArrayList<String>();
-	static int ind = 0;
-	
-    // Encodes a tree to a single string.
+	// Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-    	if(root == null){
-			list.add("#");
-			return "";
-		}
-
-		list.add(root.val+"");
-		serialize(root.left);
-		serialize(root.right);
-
-		return "";
+        StringBuilder sb = new StringBuilder();
+        serialize(root, sb);
+        return sb.toString();
+    }
+    
+    public void serialize(TreeNode root, StringBuilder sb) {
+        if (root == null) {
+            sb.append("#").append(",");
+        } else {
+            sb.append(root.val).append(",");
+            serialize(root.left, sb);
+            serialize(root.right, sb);
+        }
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-    	if(ind >= list.size() || list.get(ind).equals("#")){
-			ind++;
-			return null;
-		}
-		//System.out.println(list.get(ind));
-		TreeNode root = new TreeNode(Integer.parseInt(list.get(ind)));
-		ind++;
-		root.left = deserialize(data);
-		root.right = deserialize(data);
-		return root;
-
+        Queue<String> q = new LinkedList<>(Arrays.asList(data.split(",")));
+        return deserialize(q);
+    }
+    
+    public TreeNode deserialize(Queue<String> q) {
+        String s = q.poll();
+        if (s.equals("#")) 
+        	return null;
+        TreeNode root = new TreeNode(Integer.parseInt(s));
+        root.left = deserialize(q);
+        root.right = deserialize(q);
+        return root;
     }
     
     void inorder(TreeNode root) {
@@ -65,7 +68,7 @@ public class Main {
 		c.inorder(c.root);
 		System.out.println();
 		String str = c.serialize(c.root);
-		System.out.println(c.list);
+		//System.out.println(c.list);
 		Codec.TreeNode node = c.deserialize(str);
 		c.inorder(c.root);
 		System.out.println();

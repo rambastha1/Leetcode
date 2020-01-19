@@ -69,7 +69,7 @@ class Solution {
     		int y = position[1];
     		
     		int current = x*n+y;
-    		// if this query is alredy fired, continue
+    		// if this query is already fired, continue
     		if(parent[current] != -1) {
     			res.add(this.count);
     			continue;

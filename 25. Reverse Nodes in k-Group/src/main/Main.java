@@ -17,7 +17,7 @@ class Solution {
     	ListNode res = new ListNode(0);
     	res.next = head;
     	
-    	ListNode prev = res, curr = head, next = null, tail = res, temp = null;
+    	ListNode prev = res, tail = res, temp = null;
     	while(true) {
     		for(int i = 1;i <= k;i++) {
 	    		if(tail == null)
@@ -45,10 +45,29 @@ class Solution {
     	}
     	return res.next;
     }
+    
+    public void display(ListNode head) {
+    	while(head != null) {
+    		System.out.print(head.val + " ");
+    		head = head.next;
+    	}
+    	System.out.println();
+    }
+    
+    public ListNode head;
 }
 
 public class Main {
 	public static void main(String[] args) {
-
+		Solution s = new Solution();
+		s.head = s.new ListNode(1);
+		s.head.next = s.new ListNode(2);
+		s.head.next.next = s.new ListNode(3);
+		s.head.next.next.next = s.new ListNode(4);
+		s.head.next.next.next.next = s.new ListNode(5);
+		s.head.next.next.next.next.next = s.new ListNode(6);
+		s.display(s.head);
+		s.head = s.reverseKGroup(s.head, 3);
+		s.display(s.head);
 	}
 }

@@ -3,16 +3,10 @@ package main;
 class Solution {
     public int[] countBits(int num) {
     	int []res = new int[num+1];
-    	res[0] = 0;
     	for(int i = 1;i <= num;i++) {
-    		int count = 0, temp = i;
-    		while(temp > 0) {
-    			temp &= (temp-1);
-    			count++;
-    		}
-    		res[i] = count;
+    		// remove last number + take mod of last number
+    		res[i] = res[i>>1] + i%2;
     	}
-    	
     	return res;
     }
 }
