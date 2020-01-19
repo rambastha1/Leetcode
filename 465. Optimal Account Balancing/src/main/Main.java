@@ -86,6 +86,7 @@ class Solution {
             if (debt.get(start) * debt.get(i) < 0) {
             	
                 debt.set(i, debt.get(i) + debt.get(start));
+                // start +1 because start is settled
                 transactions = Math.min(transactions, 1 + settle(start + 1, debt));
                 debt.set(i, debt.get(i) - debt.get(start));
             }

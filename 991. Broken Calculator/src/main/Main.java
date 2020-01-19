@@ -2,6 +2,7 @@ package main;
 
 // Must read
 // https://leetcode.com/articles/broken-calculator/
+// https://leetcode.com/problems/broken-calculator/discuss/236565/Detailed-Proof-Of-Correctness-Greedy-Algorithm
 
 class Solution {
 	

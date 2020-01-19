@@ -1,6 +1,8 @@
 package main;
 
-/* About why it is (n-i)*(i+1)
+/* https://www.geeksforgeeks.org/sum-of-all-subarrays/
+ * https://www.geeksforgeeks.org/sum-of-all-subsequences-of-an-array/
+ * About why it is (n-i)*(i+1)
 because for ith element to be present in a subarray we can have the starting point from o to i that is (i+1) number of ways
 and the ending point must be from i to n-1 that is (n-i) ways
 For each pair of starting and ending point there exists an array uniquely

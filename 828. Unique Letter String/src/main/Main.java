@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Time 0(n)
  * Think about string "XAXAXXAX" and focus on making the second "A" a unique character.
 We can take "XA(XAXX)AX" and between "()" is our substring.
-We can see here, to make the second "A" counted as a uniq character, we need to:
+We can see here, to make the second "A" counted as a unique character, we need to:
 
 insert "(" somewhere between the first and second A
 insert ")" somewhere between the second and third A

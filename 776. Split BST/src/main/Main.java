@@ -143,23 +143,23 @@ class Solution {
 public class Main {
 	public static void main(String[] args) {
 		Solution s = new Solution();
-		/*s.root = s.new TreeNode(4);
+		s.root = s.new TreeNode(4);
 		s.root.left = s.new TreeNode(2);
 		s.root.right = s.new TreeNode(6);
 		s.root.left.left = s.new TreeNode(1);
 		s.root.left.right = s.new TreeNode(3);
 		s.root.right.left = s.new TreeNode(5);
-		s.root.right.right = s.new TreeNode(7);*/
+		s.root.right.right = s.new TreeNode(7);
 		
-		s.root = s.new TreeNode(8);
+		/*s.root = s.new TreeNode(8);
 		s.root.left = s.new TreeNode(6);
 		s.root.right = s.new TreeNode(15);
 		s.root.left.left = s.new TreeNode(3);
 		s.root.left.right = s.new TreeNode(7);
 		s.root.right.left = s.new TreeNode(13);
-		s.root.right.right = s.new TreeNode(17);
+		s.root.right.right = s.new TreeNode(17);*/
 		
-		Solution.TreeNode []res = s.splitBST(s.root, 4);
+		Solution.TreeNode []res = s.splitBST(s.root, 2);
 		
 		if(res[0] != null)
 			s.levelorder(res[0]);

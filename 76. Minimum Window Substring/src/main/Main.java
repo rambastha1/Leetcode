@@ -1,58 +1,50 @@
 package main;
 
-/* simialr to 727 but here ordering is not important
- * 
+import java.util.Arrays;
+
+/* similar to 727 but here ordering is not important
+ * i was facing problem in how to increment and decrement count values in sliding window to each whether t is there in s 
+ * https://leetcode.com/problems/minimum-window-substring/discuss/26971/Three-O(N)-concise-implemetation-according-to-leetcode-oj-discuss
  */
 class Solution {
     public String minWindow(String s, String t) {
     	if(s.length() == 0 && t.length() == 0)
     		return "";
-    	String res = "";
-    	int len = s.length();
     	
-    	int []count = new int[256];
+    	if(s.compareTo(t) == 0)
+    		return s;
+    	String res = "";
+    	int m = s.length(), n = t.length(), counter = 0, minlen = Integer.MAX_VALUE;
+    	int start_index = 0;
+    	
+    	int []count = new int[128];
     	for(char c : t.toCharArray())
     		count[c]++;
-    	
-    	int i = 0, tindex = 0;
-    	while(i < s.length()) {
-    		// if char matches move T pointer
-    		if(s.charAt(i) == t.charAt(tindex)) {
-    			tindex++;
-    			/* 
-    			 * If T is subsequence of this substring
-    			 * try to move backward to find if there's smaller substring which contains T
-    			 */
-    			if(tindex == t.length()) {
-    				int end = i+1;
-    				// tindex to point last character
-    				tindex--;
-    				while(tindex >= 0) {
-    					if(s.charAt(i) == t.charAt(tindex))
-    						tindex--;
-    					i--;
-    				}
-    				// i to point to first character in T
-    				i++;
-    				// tindex to point to 0
-    				tindex++;
-    				// check if this substring is smaller
-    				if(end - i < len) {
-    					len = end - i;
-    					res = s.substring(i, end);
-    				}
-    					
+    	int start = 0, end = 0;
+    	for(end = 0;end < m;end++) {
+    		count[s.charAt(end)]--;
+    		if(count[s.charAt(end)] >= 0)
+    			counter++;
+    		while(counter == n) {
+    			if(end - start + 1 < minlen) {
+    				minlen = end - start + 1;
+    				start_index = start;
     			}
+    			count[s.charAt(start)]++;
+    			if(count[s.charAt(start)] > 0)
+    				counter--;
+    			start++;
     		}
-    		i++;
     	}
-    	return len == Integer.MAX_VALUE?"":res;
+    	if(minlen == Integer.MAX_VALUE)
+    		return "";
+    	return s.substring(start_index, start_index + minlen);
     }
 }
 
 public class Main {
 	public static void main(String[] args) {
-		String s = "ADOBECODEBANC", t = "ABC";
+		String s = "acbbaca", t = "aba";
 		System.out.println(new Solution().minWindow(s, t));
 	}
 }

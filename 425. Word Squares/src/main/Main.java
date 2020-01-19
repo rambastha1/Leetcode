@@ -87,6 +87,7 @@ The output consists of two word squares. The order of output does not matter (ju
  * https://leetcode.com/problems/word-squares/discuss/91348/My-Java-Solution-using-hashMap-and-backtracking-163ms
  */
 
+// debug you'll understand
 class Solution {
     public List<List<String>> wordSquares(String[] words) {
     	List<List<String>> res = new ArrayList<>();

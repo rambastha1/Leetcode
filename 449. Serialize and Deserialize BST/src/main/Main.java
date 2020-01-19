@@ -1,8 +1,7 @@
 package main;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import main.Codec.TreeNode;
@@ -16,35 +15,42 @@ class Codec {
 		TreeNode(int x) { val = x; }
 	}
 	
-	List<String> list;
-	int index = 0;
-	
-	public Codec() {
-		list = new ArrayList<>();
-	}
-	
-    // Encodes a tree to a single string.
+	// Encodes a tree to a single string.
     public String serialize(TreeNode root) {
-    	if(root == null) {
-    		list.add("#");
-    		return "";
-    	}
-    	list.add(String.valueOf(root.val + ""));
-    	serialize(root.left);
-    	serialize(root.right);
-    	return "";
+        StringBuilder sb = new StringBuilder();
+        serialize(root, sb);
+        return sb.toString();
+    }
+    
+    public void serialize(TreeNode root, StringBuilder sb) {
+        if (root == null) 
+        	return;
+        sb.append(root.val).append(",");
+        serialize(root.left, sb);
+        serialize(root.right, sb);
     }
 
     // Decodes your encoded data to tree.
     public TreeNode deserialize(String data) {
-    	if(index >= list.size() || list.get(index) == "#") {
-    		index++;
-    		return null;
-    	}
-    	TreeNode node = new TreeNode(Integer.valueOf(list.get(index++)));
-    	node.left = deserialize(data);
-    	node.right = deserialize(data);
-        return node;
+        if (data.isEmpty()) 
+        	return null;
+        Queue<String> q = new LinkedList<>(Arrays.asList(data.split(",")));
+        return deserialize(q, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+    
+    public TreeNode deserialize(Queue<String> q, int lower, int upper) {
+        if (q.isEmpty()) 
+        	return null;
+        String s = q.peek();
+        int val = Integer.parseInt(s);
+        
+        if (val < lower || val > upper) 
+        	return null;
+        q.poll();
+        TreeNode root = new TreeNode(val);
+        root.left = deserialize(q, lower, val);
+        root.right = deserialize(q, val, upper);
+        return root;
     }
     
     public TreeNode root;
@@ -81,7 +87,7 @@ public class Main {
 		c.root.left.right = c.new TreeNode(5);
 		c.root.right.left = c.new TreeNode(6);
 		String data = c.serialize(c.root);
-		System.out.println(c.list);
+		//System.out.println(c.list);
 		TreeNode node = c.deserialize(data);
 		c.levelorder(node);
 	}

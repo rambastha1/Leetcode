@@ -7,6 +7,14 @@ package main;
  * https://www.geeksforgeeks.org/dynamic-programming-trees-set-2/
  * https://codeforces.com/blog/entry/20935
  * https://leetcode.com/problems/sum-of-distances-in-tree/discuss/130583/C%2B%2BJavaPython-Pre-order-and-Post-order-DFS-O(N)
+ * 
+ * res[node] += res[dest] + count[dest]
+ * i is a child of root. res[i]: distance of node i to its all children. res[root]: distance of node root to all its children. 
+ * Here, all children of node i is just one node away from node root. Thus, res[i] + count[i]( = total nodes in subtree i) is 
+ * equal to the distance of all nodes in subtree i to root. Thus, res[root] = sum(res[i]) + sum(count[i]).
+ * 
+ * When we move our root from parent to its child i, count[i] points get 1 closer to root, n - count[i] nodes get 1 futhur to root.
+res[i] = res[root] - count[i] + N - count[i]
  */
 
 import java.util.ArrayList;

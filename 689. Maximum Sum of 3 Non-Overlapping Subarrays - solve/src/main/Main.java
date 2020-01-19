@@ -22,6 +22,9 @@ class Solution {
     	int [][]dp = new int[4][n+1];
     	int [][]pos = new int[4][n+1];
     	
+    	/* we are looking for 3 non-overlapping subarray each of size k with max sum
+    	 * j = k*i will give 1st array i.e start of 2nd array
+    	 */
     	for(int i = 1;i <= 3;i++) {
     		for(int j = k*i;j <= n;j++) {
     			// sum of k+1 to j + previous max overlap possible

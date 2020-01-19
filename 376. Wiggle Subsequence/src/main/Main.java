@@ -1,34 +1,21 @@
 package main;
 
 class Solution {
-	
+	// 978
 	public int wiggleMaxLength(int[] nums) {
 		if(nums == null || nums.length == 0)
     		return 0;
     	if(nums.length == 1)
     		return 1;
-    	int n = nums.length, ans = 1, index = 0, sign = -1;
+    	int n = nums.length, up = 1, down = 1;
     	
     	for(int i = 1;i < n;i++) {
-    		if(nums[i] == nums[index])
-    			continue;
-    		if(sign == -1) {
-    			ans++;
-    			sign = nums[i]>nums[index]?1:0;
-    		} else {
-    			if(nums[i] > nums[index] && sign == 1 || nums[i] < nums[index] && sign == 0) {
-    				index = i;
-    				continue;
-    			}
-    			
-    			if((nums[i] > nums[index] && sign == 0) || (nums[i] < nums[index] && sign == 1)) {
-    				ans++;
-    				sign ^= 1;
-    			}
-    		}
-    		index = i;
+    		if(nums[i] > nums[i-1])
+    			up = down +1;
+    		else if(nums[i] < nums[i-1])
+    			down = up+1;
     	}
-    	return ans;
+    	return Math.max(up, down);
 	}
 	
 	// Time 0(N^2) Space 0(N)
@@ -69,5 +56,6 @@ public class Main {
 		//int []nums = {1,7,4,9,2,5};
 		int []nums = {1,17,5,10,13,15,10,5,16,8};
 		System.out.println(new Solution().wiggleMaxLength(nums));
+		System.out.println(new Solution().wiggleMaxLength1(nums));
 	}
 }

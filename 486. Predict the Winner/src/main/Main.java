@@ -11,7 +11,7 @@ package main;
  * Similar argument holds true for Player 2's turn as well i.e. we can subtract 
  * Player 1's score for the remaining subarray from Player 2's current score to 
  * obtain its effective score. By making use of this observation, we can omit the 
- * use of turnturn from winner to find the required result by making the slight change 
+ * use of turn from winner to find the required result by making the slight change 
  * discussed above in the winner's implementation.
  */
 

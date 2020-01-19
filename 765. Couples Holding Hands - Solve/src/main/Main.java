@@ -1,9 +1,25 @@
 package main;
 /* https://leetcode.com/problems/couples-holding-hands/discuss/117520/Java-union-find-easy-to-understand-5-ms
- * https://leetcode.com/problems/couples-holding-hands/discuss/160104/Union-find-understand-in-60-seconds-beats-99.6
+ * 
  * https://leetcode.com/problems/couples-holding-hands/discuss/113362/JavaC%2B%2B-O(N)-solution-using-cyclic-swapping
  * https://leetcode.com/problems/couples-holding-hands/discuss/113362/JavaC%2B%2B-O(N)-solution-using-cyclic-swapping
  * The greedy method derives from cycle of graph itself
+ * 
+ * // initially we have N couples, each couple will have the same group identifier
+        // index :              0 1 2 3 4 5 6 7 8 9
+        // couple:              0 1 2 3 4 5 6 7 8 9
+        // group identifier:    0 0 1 1 2 2 3 3 4 4
+         * 
+    p1,p2 from g1 identifier = 0
+    p1,p2 from g2 identifier = 1
+    so in total n/2 identifier as n/2 couples
+    thus n = row.length/2
+   https://leetcode.com/problems/couples-holding-hands/discuss/160104/Union-find-understand-in-60-seconds-beats-99.6
+   explains it well
+    once we find row[2*i] and row[2*i+1] divide by 2 to get identifier, if(person1 != person2) based on identifier
+    Our job is to count how many swaps are needed! How does union find help? If we do the swap for two couples for the first time, 
+    we count the swap and put these two couples into 1 group. If we need to do the swap for the same two couples again, 
+    the first swap already fix these two, and we skip the count part.
  */
 class Solution {
 	
