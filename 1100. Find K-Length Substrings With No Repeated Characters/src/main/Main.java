@@ -5,8 +5,6 @@ import java.util.Map;
 
 /* Given a string S, return the number of substrings of length K with no repeated characters.
 
- 
-
 Example 1:
 
 Input: S = "havefunonleetcode", K = 5

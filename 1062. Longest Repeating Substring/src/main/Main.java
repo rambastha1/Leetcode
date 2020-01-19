@@ -267,5 +267,8 @@ public class Main {
 		//String S = "aabcaabdaab";
 		String S = "banana";
 		System.out.println(new Solution().longestRepeatingSubstring(S));
+		System.out.println(new Solution().longestRepeatingSubstring1(S));
+		System.out.println(new Solution().longestRepeatingSubstring2(S));
+		System.out.println(new Solution().longestRepeatingSubstring3(S));
 	}
 }

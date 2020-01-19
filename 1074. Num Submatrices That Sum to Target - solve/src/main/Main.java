@@ -3,7 +3,7 @@ package main;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-
+// https://leetcode.com/problems/number-of-submatrices-that-sum-to-target/discuss/303755/(Java)-Simple-solution-with-explanation.
 class Solution {
 	// Time 0(N^3) Space O(M)
     public int numSubmatrixSumTarget(int[][] matrix, int target) {
@@ -30,11 +30,16 @@ class Solution {
     
     private int getcount(int []A, int target) {
     	// sum -> count
+    	/* if able to find sum == target -> for all rows i,j,k
+    	 * A[i]+A[j]+A[k] = target -> means sub-matrices
+    	 */
     	Map<Integer, Integer> map = new HashMap<>();
     	int sum = 0, res = 0;
-    	map.put(0, 1);
     	for(int i = 0;i < A.length;i++) {
     		sum += A[i];
+    		if(sum == target)
+    			res++;
+    		
     		if(map.containsKey(sum - target))
     			res += map.get(sum - target);
     		map.put(sum, map.getOrDefault(sum, 0) + 1);
