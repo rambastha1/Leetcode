@@ -10,11 +10,12 @@ class Solution {
 		int []dp = new int[k+1];
 		dp[0] = 1;
 		for(int i = 1;i <= n;i++) {
-			for(int j = 1;j <= k;j++) {
+			// need to work backwards as dp[j] depends on dp[j-1]
+			for(int j = k;j >= A[i-1];j--) {
 				/*if(j - A[i-1] == 0)
 					dp[j] += 1;*/
-				if(j - A[i-1] >= 0 && j - A[i-1] <= k)
-					dp[j] += dp[j-1] + dp[j-A[i-1]];
+				//if(j - A[i-1] >= 0 && j - A[i-1] <= k)
+					dp[j] += dp[j-A[i-1]];
 			}
 		}		
 		return dp[k];
@@ -46,5 +47,6 @@ public class Main {
 		int []A = {1,4,-1,10,5};
 		int k = 9;
 		System.out.println(new Solution().count(A, k));
+		System.out.println(new Solution().count1(A, k));
 	}
 }
