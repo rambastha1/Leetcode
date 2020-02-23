@@ -5,10 +5,13 @@ class Solution {
     public int atMostNGivenDigitSet(String[] D, int N) {
     	String str = String.valueOf(N);
     	int n = str.length(), ans = 0;
+    	// handles number of digits whose length are less than N
+    	// x, xx, xxx say N is 1000
     	for(int i = 1;i < n;i++) {
     		ans += (int)Math.pow(D.length, i);
     	}
     	
+    	// for xxxx 
     	for(int i = 0;i < n;i++) {
     		boolean samedigit = false;
     		for(String s : D) {
