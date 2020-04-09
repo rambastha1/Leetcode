@@ -14,7 +14,7 @@ import java.util.PriorityQueue;
 A worker can either split into two workers (number of workers increases by one) or build a block then go home. 
 Both decisions cost some time.
 
-The time cost of spliting one worker into two workers is given as an integer split. Note that if two workers split at the same time, 
+The time cost of splitting one worker into two workers is given as an integer split. Note that if two workers split at the same time, 
 they split in parallel so the cost would be split.
 
 Output the minimum time needed to build all blocks.
