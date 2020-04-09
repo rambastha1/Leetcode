@@ -3,76 +3,35 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
-// https://leetcode.com/problems/swap-for-longest-repeated-character-substring/discuss/355875/Java-solution-with-very-detail-explanation-O(n)-Time-beat-100
-
+// https://leetcode.com/problems/swap-for-longest-repeated-character-substring/discuss/355922/C%2B%2B-2-approaches
 class Solution {
-	
-	class State {
-		char c;
-		int start, end;
-		public State(char c, int start, int end) {
-			this.c = c;
-			this.start = start;
-			this.end = end;
+	// 0(N) time
+	public int maxRepOpt1(String text) {
+		List<Integer>[]arr = new ArrayList[26];
+		for(int i = 0;i < 26;i++)
+			arr[i] = new ArrayList<>();
+		int n = text.length();
+		for(int i = 0;i < n;i++) {
+			char c = text.charAt(i);
+			arr[c-'a'].add(i);
 		}
+		
+		int res = 1;
+		for(int i = 0;i < 26;i++) {
+			int count = 1, count1 = 0, max = 0;
+			for(int j = 1;j < arr[i].size();j++) {
+				if(arr[i].get(j) == arr[i].get(j-1) + 1)
+					count++;
+				else {
+					count1 = arr[i].get(j) == arr[i].get(j-1) + 2?count:0;
+					count = 1;
+				}
+				max = Math.max(max, count + count1);
+			}
+			res = Math.max(res, max + (arr[i].size() > max?1:0));
+		}
+		return res;
 	}
-	
-	// 0(N)
-    public int maxRepOpt1(String text) {
-    	List<State> list = new ArrayList<>();
-    	int start = 0, end = 0;
-    	char c = text.charAt(0);
-    	int i = 1, n = text.length();
-    	
-    	int []count = new int[26];
-    	// total count of each character 
-    	count[c-'a']++;
-    	
-    	// a-2, b-1, a-2, b-1, a-1 character with start and end position
-    	while(i < n) {
-    		char curr = text.charAt(i);
-    		count[curr-'a']++;
-    		
-    		if(curr != c) {
-    			list.add(new State(c, start, end));
-    			c = curr;
-    			start = i;
-    			end = i;
-    		} else
-    			end = i;
-    		i++;
-    	}
-    	
-    	list.add(new State(c, start, end));
-    	int maxlen = 1;
-    	
-    	// scenario 1, aaabba, find another a to replace b to increase maxlen+1
-    	for(i = 0;i < list.size();i++) {
-    		State state = list.get(i);
-    		int len = state.end - state.start + 1;
-    		// this will give whether any character ('a' in this case) are still left
-    		if(len < count[state.c - 'a'])
-    			len++;
-    		maxlen = Math.max(maxlen, len);
-    	}
-    	
-    	// scenario 2, aabaabaa, find another a to replace b
-    	for(i = 1;i < list.size()-1;i++) {
-    		State prev = list.get(i-1), curr= list.get(i), next = list.get(i+1);
-    		int prevlen = prev.end - prev.start + 1;
-    		int nextlen = next.end - next.start + 1;
-    		// this will give 'b' of length 1, check both sides if character are same, then check if any character still left 
-    		if(curr.start == curr.end && prev.c == next.c) {
-    			int totallen = prevlen + nextlen;
-    			// this will give whether any character ('a' in this case) are still left 
-    			if(prevlen + nextlen < count[prev.c-'a'])
-    				totallen++;
-    			maxlen = Math.max(maxlen, totallen);
-    		}
-    	}
-    	return maxlen;
-    }
-	
 	
 	// 0(N^2)
 	public int maxRepOpt12(String text) {

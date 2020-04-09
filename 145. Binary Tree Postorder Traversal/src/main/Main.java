@@ -1,6 +1,7 @@
 package main;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 class Solution {
 	
@@ -13,15 +14,18 @@ class Solution {
 	
 	public List<Integer> postorderTraversal(TreeNode root) {
         List<Integer> res = new ArrayList<>();
-        return util(root, res);
-    }
-    
-    public List<Integer> util(TreeNode root, List<Integer> res) {
+        Stack<TreeNode> stack = new Stack<>();
         if(root == null)
-            return res;
-        util(root.left, res);
-        util(root.right, res);
-        res.add(root.val);
+        	return res;
+        stack.push(root);
+        while(!stack.isEmpty()) {
+        	TreeNode curr = stack.pop();
+        	res.add(0, curr.val);
+        	if(curr.left != null)
+        		stack.push(curr.left);
+        	if(curr.right != null)
+        		stack.push(curr.right);
+        }
         return res;
     }
 }
