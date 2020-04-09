@@ -38,7 +38,7 @@ class Solution {
     		max = Math.max(max, i);
     		min = Math.min(min, i);
     	}
-    	// the minimum possibale gap, ceiling of the integer division
+    	// the minimum possible gap, ceiling of the integer division
     	int gap = (int)Math.ceil((double)(max-min)/(n-1));
     	int []minbucket = new int[n-1];
     	Arrays.fill(minbucket, Integer.MAX_VALUE);

@@ -25,7 +25,8 @@ class Solution {
                         continue;
                         // have already detected || out of boundary || cannot access 
                     }
-                    int cur = Math.max(Math.max(dp[x1 - 1][y1][x2], dp[x1 - 1][y1][x2 - 1]), Math.max(dp[x1][y1 - 1][x2], dp[x1][y1 - 1][x2 - 1]));
+                    int cur = Math.max(Math.max(dp[x1 - 1][y1][x2], dp[x1 - 1][y1][x2 - 1]), 
+                    		Math.max(dp[x1][y1 - 1][x2], dp[x1][y1 - 1][x2 - 1]));
                     if(cur < 0){
                         continue;
                     }

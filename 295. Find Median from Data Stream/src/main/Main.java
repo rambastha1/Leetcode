@@ -1,5 +1,6 @@
 package main;
 
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 
@@ -13,25 +14,20 @@ class MedianFinder {
 	 */
 	PriorityQueue<Long> large, small;
     public MedianFinder() {
-        large = new PriorityQueue<>(new Comparator<Long>() {
-			@Override
-			public int compare(Long o1, Long o2) {
-				return o2.compareTo(o1);
-			}
-		});
-        small = new PriorityQueue<>();
+        large = new PriorityQueue<>();
+        small = new PriorityQueue<>(Collections.reverseOrder());
     }
     
     public void addNum(int num) {
         large.add((long)num);
         small.add(large.poll());
-        if(small.size() - large.size() > 1)
+        if(small.size() > large.size())
         	large.add(small.poll());
     }
     
     public double findMedian() {
-    	if(small.size() > large.size())
-    		return small.peek();
+    	if(small.size() < large.size())
+    		return large.peek();
     	
         return (small.peek() + large.peek())/2.0;
     }

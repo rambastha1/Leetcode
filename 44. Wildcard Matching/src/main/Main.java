@@ -13,24 +13,16 @@ Then, initialize dp[0][j], j = [1, n]. In this case, s has nothing, to get dp[0]
 Once p.charAt(j-1) != '*', all the dp[0][j] afterwards will be false.
 
 Then start the typical DP loop.
- * https://leetcode.com/problems/wildcard-matching/discuss/17812/My-java-DP-solution-using-2D-table
+ * 
  */
 class Solution {
-	// 0(m*n) time and space
     public boolean isMatch(String s, String p) {
     	int m = s.length(), n = p.length();
     	char []S = s.toCharArray(), P = p.toCharArray();
-    	boolean [][]dp = new boolean[m+1][n+1];
-    	dp[0][0] = true;
     	
-    	for(int j=1; j <= n;j++) {
-    		if(p.charAt(j-1)=='*'){
-    			dp[0][j] = true;
-    		} else {
-    			break;
-    		}
-    	}
-    	for(int i = 1;i <= m;i++) {
+    	/* // 0(m*n) time and space
+    	 * https://leetcode.com/problems/wildcard-matching/discuss/17812/My-java-DP-solution-using-2D-table
+    	 * for(int i = 1;i <= m;i++) {
     		for(int j = 1;j <= n;j++) {
     			if(P[j-1] != '*') {
     				dp[i][j] = dp[i-1][j-1] && (S[i-1] == P[j-1] || P[j-1] == '?');
@@ -38,8 +30,29 @@ class Solution {
     				dp[i][j] = dp[i-1][j] || dp[i][j-1];
     			}
     		}
+    	}*/
+    	
+    	// https://leetcode.com/problems/wildcard-matching/discuss/17810/Linear-runtime-and-constant-space-solution
+    	// 0(MN) time constant space
+    	int i = 0, j = 0, match = 0, starindex = -1;
+    	while(i < m) {
+    		if(j < n && (P[j] == '?' || P[j] == S[i])) {
+    			i++;
+    			j++;
+    		} else if(j < n && P[j] == '*') {
+    			starindex = j;
+    			match = i;
+    			j++;
+    		} else if(starindex != -1) {
+    			j = starindex +1;
+    			match++;
+    			i = match;
+    		} else
+    			return false;
     	}
-    	return dp[m][n];
+    	while(j < n && P[j] == '*')
+    		j++;
+    	return j == n;
     }
 }
 

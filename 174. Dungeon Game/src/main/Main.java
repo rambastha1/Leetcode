@@ -26,8 +26,8 @@ class Solution {
 
 public class Main {
 	public static void main(String[] args) {
-		//int[][] dungeon = {{-2,-3,3},{-5,-10,1},{10,30,-5}};
-		int[][] dungeon = {{0,-3}};
+		int[][] dungeon = {{-2,-3,3},{-5,-10,1},{10,30,-5}};
+		//int[][] dungeon = {{0,-3}};
 		System.out.println(new Solution().calculateMinimumHP(dungeon));
 	}
 }

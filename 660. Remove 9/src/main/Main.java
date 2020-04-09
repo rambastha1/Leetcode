@@ -10,6 +10,10 @@ Example 1:
 Input: 9
 Output: 10
 Hint: n will not exceed 9 x 10^8.
+https://leetcode.com/problems/remove-9/discuss/106561/one-line-java-solution
+why it works?
+every number in 9 based system is in increasing order
+so if we convert this n(n th number in decimal system) into 9 based number, that number will be nth number in 9 based system
  * 
  */
 

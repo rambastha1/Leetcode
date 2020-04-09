@@ -61,7 +61,7 @@ class Solution {
 
 public class Main {
 	public static void main(String[] args) {
-		String expression = "(add 1 2)";
+		String expression = "(let x 1 y 2 x (add x y) (add x y))";
 		System.out.println(new Solution().evaluate(expression));
 	}
 }

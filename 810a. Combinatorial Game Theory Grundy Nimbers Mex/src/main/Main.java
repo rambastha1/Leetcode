@@ -11,7 +11,7 @@ import java.util.Set;
  * 
  *
  *  Sprague Grundy is used to predict which player wins the impartial game beforehand
- *  It can be used to determine optimal step forwerd
+ *  It can be used to determine optimal step forward
  */ 
 
 class Solution {

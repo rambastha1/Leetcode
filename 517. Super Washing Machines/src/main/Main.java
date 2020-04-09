@@ -7,7 +7,7 @@ package main;
 Otherwise, we can always transfer a dress from one machine to another, one at a time until every machines reach the same number, 
 so there must be a solution. In this way, the total actions is sum of operations on every machine.
 
-Since we can operate several machines at the same time, the minium number of moves is the maximum number of necessary operations 
+Since we can operate several machines at the same time, the minimum number of moves is the maximum number of necessary operations 
 on every machine.
 
 For a single machine, necessary operations is to transfer dresses from one side to another until sum of both sides and itself 

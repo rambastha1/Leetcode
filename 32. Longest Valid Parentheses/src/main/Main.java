@@ -9,6 +9,7 @@ import java.util.Stack;
  * ...)) if dp[i-1] is valid parentheses then start would be dp[i-1] - 1
  * thus dp[i] = dp[i-1] + 2 + dp[i- dp[i-1] - 2] 
  * i-dp[i-2]-2 would be ')'
+ * https://leetcode.com/problems/longest-valid-parentheses/discuss/243913/7ms-100-O(n)-time-and-O(1)-space-without-stack-or-array
  */
 class Solution {
     public int longestValidParentheses(String s) {
